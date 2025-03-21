@@ -39,7 +39,7 @@ export default function MedicalChat() {
     const styleElement = document.createElement('style');
     styleElement.innerHTML = markdownStyles;
     document.head.appendChild(styleElement);
-    
+
     return () => {
       document.head.removeChild(styleElement);
     };
@@ -48,35 +48,35 @@ export default function MedicalChat() {
   const sendMessage = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!input.trim()) return;
-  
+
     const userMessage: Message = {
       id: crypto.randomUUID(),
       role: "user",
       content: input,
     };
-  
+
     setMessages((prev) => [...prev, userMessage]);
     setInput("");
     setIsLoading(true);
-  
+
     try {
       const response = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ messages: [...messages, userMessage] }),
       });
-  
+
       if (!response.ok) throw new Error("Server error");
-  
+
       const data = await response.json();
-      
+
       // Handle the response format which contains 'output' property
       const assistantMessage: Message = {
         id: crypto.randomUUID(),
         role: "assistant",
         content: data.output || "Internal server error",
       };
-  
+
       setMessages((prev) => [...prev, assistantMessage]);
     } catch (error) {
       console.error("Chat error:", error);
@@ -93,7 +93,7 @@ export default function MedicalChat() {
       setIsLoading(false);
     }
   };
-  
+
   // Auto-scroll to bottom when messages change
   React.useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -105,7 +105,7 @@ export default function MedicalChat() {
     const formattedContent = content.replace(/```(\w+)?\n([\s\S]*?)```/g, (match, language, code) => {
       return `<pre><code>${code.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</code></pre>`;
     });
-    
+
     // Handle markdown formatting
     return formattedContent
       .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
@@ -117,36 +117,43 @@ export default function MedicalChat() {
       .replace(/<ul><\/ul>/g, '')
       .replace(/\n\n/g, '<br/><br/>');
   };
+  
 
   return (
     <div className="flex flex-col h-screen w-full">
-  {/* Header */}
-  <div className="flex justify-between items-center p-4 border-b border-secondary/20 bg-secondary/10">
-    {/* Left side with bot avatar and text */}
-    <div className="flex items-center">
-      <Avatar className="h-8 w-8 mr-2">
-        <AvatarImage src="/placeholder.svg" />
-        <AvatarFallback className="bg-primary text-primary-foreground">
-          <Bot className="h-5 w-4" />
-        </AvatarFallback>
-      </Avatar>
-      <div>
-        <h1 className="text-lg font-semibold text-primary">C/C++ Assistant</h1>
-        <p className="text-sm text-muted-foreground">
-          I&apos;m here to help answer your C/C++ related questions.
-        </p>
+      {/* Header */}
+      <div className="flex justify-between items-center p-4 border-b border-secondary/20 bg-secondary/10">
+        {/* Left side with bot avatar and text */}
+        <div className="flex items-top">
+          <Avatar className="h-8 w-8 mr-3">
+            <AvatarImage src="/placeholder.svg" />
+            <AvatarFallback className="bg-primary text-primary-foreground">
+              <Bot className="h-4 w-4" />
+            </AvatarFallback>
+          </Avatar>
+          <div>
+            <h1 className="text-lg font-semibold text-primary">AI C++ Tutor</h1>
+            <p className="text-sm text-muted-foreground">
+              
+            </p>
+            <p className="text-sm text-success">
+            Subject code : CEUC 102.
+            </p>
+            <p className="text-sm text-success">
+              The guardrails are setup to answer questions related to C++ only.
+            </p>
+          </div>
+        </div>
+
+        {/* Right side with CHARUSAT image */}
+        <div className="flex items-center">
+          <img
+            src="https://www.charusat.ac.in/_next/static/media/CHARUSAT_NEW.6cad095d.png"
+            alt="CHARUSAT"
+            className="h-12 object-contain"
+          />
+        </div>
       </div>
-    </div>
-    
-    {/* Right side with CHARUSAT image */}
-    <div className="flex items-center">
-      <img 
-        src="https://www.charusat.ac.in/_next/static/media/CHARUSAT_NEW.6cad095d.png" 
-        alt="CHARUSAT" 
-        className="h-12 object-contain"
-      />
-    </div>
-  </div>
 
 
       {/* Messages Area - Takes up all available space */}
@@ -166,9 +173,9 @@ export default function MedicalChat() {
                 )}
               >
                 {message.role === "assistant" ? (
-                  <div 
+                  <div
                     className="markdown-body"
-                    dangerouslySetInnerHTML={{ 
+                    dangerouslySetInnerHTML={{
                       __html: formatCodeBlocks(message.content)
                     }}
                   />
@@ -193,7 +200,7 @@ export default function MedicalChat() {
       <div className="p-4 border-t border-secondary/20 bg-background">
         <form onSubmit={sendMessage} className="flex w-full items-center space-x-2 max-w-3xl mx-auto">
           <Input
-            placeholder="Type your C/C++ related question..."
+            placeholder="Type your C++ related question..."
             value={input}
             onChange={(e) => setInput(e.target.value)}
             className="flex-1"

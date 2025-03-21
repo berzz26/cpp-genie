@@ -40,6 +40,8 @@ body {
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
     --radius: 0.5rem;
+    --success: 142 70% 45%;
+    --success-foreground: 210 40% 98%;
   }
 
   /* Updated dark theme with more contrast and vibrant accents */
@@ -68,6 +70,8 @@ body {
     --chart-3: 43 89% 53%;
     --chart-4: 280 87% 65%;
     --chart-5: 330 81% 60%;
+    --success: 200 50% 45%;
+    --success-foreground: 210 40% 98%;
   }
 }
 
@@ -75,6 +79,7 @@ body {
   * {
     @apply border-border;
   }
+
   body {
     @apply bg-background text-foreground;
     /* Apply dark theme by default */
@@ -89,7 +94,8 @@ body {
 
 /* Main code container */
 .markdown-body pre {
-  background-color: #1e1e1e; /* VS Code-like dark gray */
+  background-color: #1e1e1e;
+  /* VS Code-like dark gray */
   color: #d4d4d4;
   border-radius: 0.375rem;
   padding: 1rem;
@@ -102,7 +108,7 @@ body {
 
 /* Inline code */
 .markdown-body code {
-  background-color: rgba(99, 110, 123, 0.4);
+  /* background-color: rgba(0, 0, 0, 0.4); */
   border-radius: 0.25rem;
   padding: 0.125rem 0.25rem;
   font-family: ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas, Liberation Mono, monospace;
@@ -110,43 +116,53 @@ body {
 
 /* C++ Syntax Highlighting */
 .cpp-keyword {
-  color: #569cd6; /* blue for keywords like class, public, private */
+  color: #569cd6;
+  /* blue for keywords like class, public, private */
 }
 
 .cpp-comment {
-  color: #6a9955; /* green for comments */
+  color: #6a9955;
+  /* green for comments */
 }
 
 .cpp-string {
-  color: #ce9178; /* orange-brown for strings */
+  color: #ce9178;
+  /* orange-brown for strings */
 }
 
 .cpp-type {
-  color: #4ec9b0; /* teal for types like int, string */
+  color: #4ec9b0;
+  /* teal for types like int, string */
 }
 
 .cpp-function {
-  color: #dcdcaa; /* yellow for function names */
+  color: #dcdcaa;
+  /* yellow for function names */
 }
 
 .cpp-number {
-  color: #b5cea8; /* light green for numbers */
+  color: #b5cea8;
+  /* light green for numbers */
 }
 
 .cpp-include {
-  color: #c586c0; /* purple for preprocessor directives */
+  color: #c586c0;
+  /* purple for preprocessor directives */
 }
 
 .cpp-namespace {
-  color: #9cdcfe; /* light blue for namespace */
+  color: #9cdcfe;
+  /* light blue for namespace */
 }
 
 .cpp-operator {
-  color: #d4d4d4; /* default text color for operators */
+  color: #d4d4d4;
+  /* default text color for operators */
 }
 
 .cpp-class {
-  color: #4ec9b0; /* teal for class names */
+  color: #4ec9b0;
+  /* teal for class names */
 }
 
 /* Line numbers */
@@ -204,4 +220,21 @@ body {
   font-weight: 600;
   margin: 0.5rem 0;
   color: var(--primary);
+}
+/* Customize scrollbar for WebKit browsers (Chrome, Safari) */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(100, 100, 100, 0.4); /* Adjust color for a subtle blend */
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(100, 100, 100, 0.6);
 }
