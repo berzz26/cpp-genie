@@ -74,7 +74,7 @@ export default function MedicalChat() {
       const assistantMessage: Message = {
         id: crypto.randomUUID(),
         role: "assistant",
-        content: data.output || "Sorry, I couldn't process your request.",
+        content: data.output || "Internal server error",
       };
   
       setMessages((prev) => [...prev, assistantMessage]);
@@ -86,7 +86,7 @@ export default function MedicalChat() {
         {
           id: crypto.randomUUID(),
           role: "assistant",
-          content: "Sorry, there was an error processing your request. Please try again.",
+          content: "*Internal server error*",
         },
       ]);
     } finally {

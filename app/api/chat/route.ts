@@ -23,11 +23,13 @@ export async function POST(req: Request) {
         maxAge: 60 * 60 * 24, // 1-day expiration
       });
     }
+    const prod_url = "https://aum12606.app.n8n.cloud/webhook/7509a482-a83c-4159-a2f3-4adc1bd77cb5"
+    const local_url = "http://localhost:5678/webhook/7509a482-a83c-4159-a2f3-4adc1bd77cb5"
 
     console.log("Session ID:", sessionId);
     console.log("Sending message to n8n:", lastMessage.content);
 
-    const response = await fetch("https://aum12606.app.n8n.cloud/webhook/7509a482-a83c-4159-a2f3-4adc1bd77cb5", {
+    const response = await fetch(prod_url, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
