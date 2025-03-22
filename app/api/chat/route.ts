@@ -29,7 +29,7 @@ export async function POST(req: Request) {
     console.log("Session ID:", sessionId);
     console.log("Sending message to n8n:", lastMessage.content);
 
-    const response = await fetch(prod_url, {
+    const response = await fetch(local_url, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
