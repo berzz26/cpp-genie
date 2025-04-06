@@ -23,7 +23,7 @@ export async function POST(req: Request) {
         maxAge: 60 * 60 * 24, // 1-day expiration
       });
     }
-    const prod_url = "https://aum12606.app.n8n.cloud/webhook/7509a482-a83c-4159-a2f3-4adc1bd77cb5"
+    const prod_url = "https://testingenv1.app.n8n.cloud/webhook/7509a482-a83c-4159-a2f3-4adc1bd77cb5"
     const local_url = "http://localhost:5678/webhook/7509a482-a83c-4159-a2f3-4adc1bd77cb5"
 
     console.log("Session ID:", sessionId);
@@ -38,11 +38,14 @@ export async function POST(req: Request) {
         message: lastMessage.content,
         sessionId,
       }),
-    });
+    }
+    
+  );
 
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
+    
 
     const data = await response.json();
     console.log("Received from n8n:", data);

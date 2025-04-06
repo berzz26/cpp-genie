@@ -2,76 +2,48 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  font-family: Arial, Helvetica, sans-serif;
-}
-
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
-}
-
 @layer base {
   :root {
-    /* Light theme colors (unchanged) */
-    --background: 0 0% 100%;
-    --foreground: 0 0% 3.9%;
-    --card: 0 0% 100%;
-    --card-foreground: 0 0% 3.9%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 3.9%;
-    --primary: 0 0% 9%;
-    --primary-foreground: 0 0% 98%;
-    --secondary: 0 0% 96.1%;
-    --secondary-foreground: 0 0% 9%;
-    --muted: 0 0% 96.1%;
-    --muted-foreground: 0 0% 45.1%;
-    --accent: 0 0% 96.1%;
-    --accent-foreground: 0 0% 9%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 89.8%;
-    --input: 0 0% 89.8%;
-    --ring: 0 0% 3.9%;
-    --chart-1: 12 76% 61%;
-    --chart-2: 173 58% 39%;
-    --chart-3: 197 37% 24%;
-    --chart-4: 43 74% 66%;
-    --chart-5: 27 87% 67%;
-    --radius: 0.5rem;
-    --success: 142 70% 45%;
-    --success-foreground: 210 40% 98%;
-  }
+    /* Enhanced Bright White-Blue Theme */
+    --background: 0 0% 100%;                  /* Pure White */
+    --foreground: 224 71% 15%;                /* Darker Blue-Gray for better contrast (changed from 7% to 71%) */
 
-  /* Updated dark theme with more contrast and vibrant accents */
-  .dark {
-    --background: 222 47% 11%;
-    --foreground: 210 40% 98%;
-    --card: 222 47% 11%;
-    --card-foreground: 210 40% 98%;
-    --popover: 222 47% 11%;
-    --popover-foreground: 210 40% 98%;
-    --primary: 217 91% 60%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 217 32% 17%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217 32% 17%;
-    --muted-foreground: 215 20% 65%;
-    --accent: 217 91% 60%;
-    --accent-foreground: 210 40% 98%;
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 217 32% 17%;
-    --input: 217 32% 17%;
-    --ring: 224 76% 48%;
-    --chart-1: 217 91% 60%;
-    --chart-2: 142 76% 36%;
-    --chart-3: 43 89% 53%;
-    --chart-4: 280 87% 65%;
-    --chart-5: 330 81% 60%;
-    --success: 200 50% 45%;
-    --success-foreground: 210 40% 98%;
+    --card: 0 0% 100%;                        /* White */
+    --card-foreground: 224 71% 15%;
+
+    --popover: 0 0% 100%;                     /* White */
+    --popover-foreground: 224 71% 15%;
+
+    --primary: 217 91% 60%;                   /* Bright Blue */
+    --primary-foreground: 0 0% 98%;           /* Off-white */
+
+    --secondary: 210 40% 96%;                 /* Very Light Grayish Blue */
+    --secondary-foreground: 224 71% 15%;
+
+    --muted: 210 20% 96%;                     /* Lighter Grayish Blue (less saturation) */
+    --muted-foreground: 215 16% 47%;          /* Softer Gray-Blue for muted text */
+
+    --accent: 217 91% 60%;                    /* Bright Blue */
+    --accent-foreground: 0 0% 98%;
+
+    --destructive: 0 84% 60%;                 /* Red */
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 214 32% 91%;                    /* Softer border color */
+    --input: 214 32% 91%;                     /* Matching input borders */
+    --ring: 217 91% 60%;                      /* Same as primary for focus ring */
+
+    --radius: 0.5rem;
+
+    --success: 142 71% 45%;                   /* Brighter success green */
+    --success-foreground: 0 0% 98%;
+
+    /* Enhanced chart colors */
+    --chart-1: 217 91% 60%; /* Blue */
+    --chart-2: 160 84% 39%; /* Vibrant Teal */
+    --chart-3: 262 83% 58%; /* Vibrant Purple */
+    --chart-4: 27 96% 61%;  /* Vibrant Orange */
+    --chart-5: 330 81% 60%; /* Vibrant Pink */
   }
 }
 
@@ -81,160 +53,143 @@ body {
   }
 
   body {
-    @apply bg-background text-foreground;
-    /* Apply dark theme by default */
-    @apply dark;
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: 'rlig' 1, 'calt' 1;
+    font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   }
 }
 
-/* Improved code editor styling with syntax highlighting */
+/* Enhanced Markdown Styles */
 .markdown-body {
-  font-size: 0.875rem;
+  @apply text-sm leading-relaxed;
+  color: hsl(var(--foreground));
 }
 
-/* Main code container */
+/* Code blocks */
 .markdown-body pre {
-  background-color: #1e1e1e;
-  /* VS Code-like dark gray */
-  color: #d4d4d4;
-  border-radius: 0.375rem;
-  padding: 1rem;
-  overflow-x: auto;
-  margin: 0.5rem 0;
-  font-family: ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas, Liberation Mono, monospace;
-  line-height: 1.6;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
+  @apply my-4 p-4 rounded-md overflow-x-auto;
+  background-color: hsl(210, 40%, 96%);
+  color: hsl(224, 71%, 15%);
+  border: 1px solid hsl(var(--border));
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  box-shadow: 0 1px 2px hsla(0, 0%, 0%, 0.05);
 }
 
-/* Inline code */
 .markdown-body code {
-  /* background-color: rgba(0, 0, 0, 0.4); */
-  border-radius: 0.25rem;
-  padding: 0.125rem 0.25rem;
-  font-family: ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas, Liberation Mono, monospace;
+  @apply px-1.5 py-0.5 rounded text-sm;
+  background-color: hsla(var(--primary)/0.1);
+  color: hsl(var(--primary));
+  font-family: inherit;
 }
 
-/* C++ Syntax Highlighting */
-.cpp-keyword {
-  color: #569cd6;
-  /* blue for keywords like class, public, private */
+.markdown-body pre code {
+  @apply bg-transparent p-0;
+  color: inherit;
 }
 
-.cpp-comment {
-  color: #6a9955;
-  /* green for comments */
-}
-
-.cpp-string {
-  color: #ce9178;
-  /* orange-brown for strings */
-}
-
-.cpp-type {
-  color: #4ec9b0;
-  /* teal for types like int, string */
-}
-
-.cpp-function {
-  color: #dcdcaa;
-  /* yellow for function names */
-}
-
-.cpp-number {
-  color: #b5cea8;
-  /* light green for numbers */
-}
-
-.cpp-include {
-  color: #c586c0;
-  /* purple for preprocessor directives */
-}
-
-.cpp-namespace {
-  color: #9cdcfe;
-  /* light blue for namespace */
-}
-
-.cpp-operator {
-  color: #d4d4d4;
-  /* default text color for operators */
-}
-
-.cpp-class {
-  color: #4ec9b0;
-  /* teal for class names */
-}
-
-/* Line numbers */
-.code-line-number {
-  display: inline-block;
-  width: 2.5rem;
-  text-align: right;
-  color: #858585;
-  margin-right: 1rem;
-  user-select: none;
-}
-
-/* Add a subtle border between line numbers and code */
-.code-with-line-numbers {
-  border-left: 1px solid #333;
-  padding-left: 1rem;
+/* Lists */
+.markdown-body ul,
+.markdown-body ol {
+  @apply my-3 pl-5;
 }
 
 .markdown-body ul {
-  list-style-type: disc;
-  padding-left: 1.5rem;
-  margin: 0.5rem 0;
+  @apply list-disc;
 }
 
 .markdown-body ol {
-  list-style-type: decimal;
-  padding-left: 1.5rem;
-  margin: 0.5rem 0;
+  @apply list-decimal;
 }
 
 .markdown-body li {
-  margin: 0.25rem 0;
+  @apply my-1;
 }
 
-.markdown-body p {
-  margin: 0.5rem 0;
+/* Headings */
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3,
+.markdown-body h4,
+.markdown-body h5,
+.markdown-body h6 {
+  @apply font-semibold mt-5 mb-2 text-primary;
 }
 
 .markdown-body h1 {
-  font-size: 1.25rem;
-  font-weight: 600;
-  margin: 0.75rem 0;
-  color: var(--primary);
+  @apply text-2xl pb-2 border-b-2;
 }
 
 .markdown-body h2 {
-  font-size: 1.125rem;
-  font-weight: 600;
-  margin: 0.5rem 0;
-  color: var(--primary);
+  @apply text-xl pb-1 border-b;
 }
 
 .markdown-body h3 {
-  font-size: 1rem;
-  font-weight: 600;
-  margin: 0.5rem 0;
-  color: var(--primary);
+  @apply text-lg;
 }
-/* Customize scrollbar for WebKit browsers (Chrome, Safari) */
+
+/* Links */
+.markdown-body a {
+  @apply text-primary underline underline-offset-4 hover:text-primary/80;
+}
+
+/* Tables */
+.markdown-body table {
+  @apply w-full my-4 border-collapse;
+}
+
+.markdown-body th,
+.markdown-body td {
+  @apply px-4 py-2 border border-border;
+}
+
+.markdown-body th {
+  @apply bg-secondary text-left font-semibold;
+}
+
+/* Blockquotes */
+.markdown-body blockquote {
+  @apply border-l-4 border-primary pl-4 italic text-muted-foreground my-4;
+}
+
+/* Horizontal Rule */
+.markdown-body hr {
+  @apply my-6 border-t border-border;
+}
+
+/* Custom Scrollbars */
 ::-webkit-scrollbar {
-  width: 6px;
+  @apply w-2 h-2;
 }
 
 ::-webkit-scrollbar-track {
-  background: transparent;
+  @apply bg-transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(100, 100, 100, 0.4); /* Adjust color for a subtle blend */
-  border-radius: 10px;
+  @apply rounded-full bg-muted;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(100, 100, 100, 0.6);
+  @apply bg-muted-foreground/50;
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: hsl(var(--muted)) transparent;
+}
+
+/* Additional Utilities */
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  .scrollbar-hide::-webkit-scrollbar {
+    @apply hidden;
+  }
 }
