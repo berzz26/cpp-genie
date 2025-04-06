@@ -10,26 +10,25 @@ export async function POST(req: Request) {
       throw new Error("Invalid request: No valid message found.");
     }
 
-    // Check if sessionId exists in cookies
+    // Session handling
     let sessionId = cookies().get("sessionId")?.value;
-
-    // If not, generate a new sessionId and set it in cookies
     if (!sessionId) {
       sessionId = crypto.randomUUID();
       cookies().set("sessionId", sessionId, {
         httpOnly: true,
         secure: true,
         sameSite: "lax",
-        maxAge: 60 * 60 * 24, // 1-day expiration
+        maxAge: 60 * 60 * 24,
       });
     }
-    const prod_url = "https://testingenv1.app.n8n.cloud/webhook/7509a482-a83c-4159-a2f3-4adc1bd77cb5"
-    const local_url = "http://localhost:5678/webhook/7509a482-a83c-4159-a2f3-4adc1bd77cb5"
 
+    const prodUrl = process.env.PROD_N8N_URL!;
+    const localUrl = process.env.LOCAL_N8N_URL!;
+    const n8nUrl = prodUrl;
     console.log("Session ID:", sessionId);
     console.log("Sending message to n8n:", lastMessage.content);
 
-    const response = await fetch(prod_url, {
+    const response = await fetch(n8nUrl, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -38,14 +37,11 @@ export async function POST(req: Request) {
         message: lastMessage.content,
         sessionId,
       }),
-    }
-    
-  );
+    });
 
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
-    
 
     const data = await response.json();
     console.log("Received from n8n:", data);
