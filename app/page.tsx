@@ -173,18 +173,7 @@ export default function CppGenieChatSplit() {
           {/* Text Content */}
           <div className="text-sm text-muted-foreground space-y-1 text-left">
             <p>A chat bot for Programming with C++</p>
-            <p>
-              Subject: <strong>CECU102</strong>
-            </p>
-            <p>
-              Semester: <strong>2nd</strong>
-            </p>
-            <p>
-              Departments: <strong>CSE / CE / IT / AI-ML</strong>
-            </p>
-            <p>
-              Institutes: <strong>DEPSTAR & CSPIT, CHARUSAT</strong>
-            </p>
+            
           </div>
   
           {/* Features */}
