@@ -156,63 +156,94 @@ export default function CppGenieChatSplit() {
       .replace(/\n\n/g, '<br/><br/>')
       .replace(/\n/g, '<br/>');
   };
-
   const SidebarContent = () => {
     return (
-      <div className="flex flex-col justify-between h-full px-4 py-6">
+      <div className="flex flex-col justify-between h-full px-6 py-6">
         {/* Top Content */}
-        <div>
+        <div className="space-y-6">
+          {/* Genie Logo */}
+          <div className="flex justify-start">
+            <img
+              src="/genie_logo.gif"
+              alt="Genie Logo"
+              className="h-16 w-auto object-contain"
+            />
+          </div>
+  
           {/* Text Content */}
-          <div className="space-y-2 text-left">
-            <h1 className="text-2xl font-bold text-primary">C++ Genie</h1>
-            <p className="text-sm text-muted-foreground">
-              A chat bot for Programming with C++
-            </p>
-            <p className="text-xs text-muted-foreground pt-2">
+          <div className="text-sm text-muted-foreground space-y-1 text-left">
+            <p>A chat bot for Programming with C++</p>
+            <p>
               Subject: <strong>CECU102</strong>
             </p>
-            <p className="text-xs text-muted-foreground">
+            <p>
               Semester: <strong>2nd</strong>
             </p>
-            <p className="text-xs text-muted-foreground">
+            <p>
               Departments: <strong>CSE / CE / IT / AI-ML</strong>
             </p>
-            <p className="text-xs text-muted-foreground">
+            <p>
               Institutes: <strong>DEPSTAR & CSPIT, CHARUSAT</strong>
             </p>
           </div>
   
-          {/* Features Section */}
-          <div className="pt-4 text-left">
+          {/* Features */}
+          <div className="text-left">
             <p className="text-sm font-semibold mb-2">Features:</p>
-            <ul className="list-disc list-inside text-xs text-muted-foreground space-y-1 pl-4">
-              <li>Answers C++ syntax & concepts.</li>
+            <ul className="list-disc text-xs text-muted-foreground space-y-2 pl-5">
+              <li>
+                <strong>Guardrails:</strong> Safe, Unbiased, prevent misleading or harmful content.
+              </li>
+              <li>
+                <strong>Free to Use:</strong> Unlimited access anytime, anywhere.
+              </li>
+              <li>
+                <strong>Why Not ChatGPT?</strong>: ChatGPT gives general or complex code. Genie gives simple and easy-to-understand responses as per syllabus/lecture notes CEUC102 – Programming with C++.
+              </li>
+              <li>
+                <strong>C++ Only:</strong> Focused only on C++ – No confusion/distraction!
+              </li>
+              <li>
+                <strong>Student-Centric:</strong> Made for students, not general users.
+              </li>
+            </ul>
+          </div>
+  
+          {/* What Genie Can Do */}
+          <div className="text-left">
+            <p className="text-sm font-semibold mt-4 mb-2">What C++ Genie Can Do:</p>
+            <ul className="list-disc text-xs text-muted-foreground space-y-2 pl-5">
+              <li>Answers query of your C++ concepts.</li>
+              <li>Helps in understanding problem-based questions.</li>
               <li>Provides code examples & explanations.</li>
-              <li>Explains standard library functions.</li>
-              <li>Helps identify potential logic errors.</li>
-              <li>Follows basic C++ coding practices.</li>
+              <li>Debugs your C++ code.</li>
+              <li>Explains errors in code.</li>
             </ul>
           </div>
         </div>
   
-        {/* Logo Section with reduced spacing */}
-        <div className="mt-3">
-          <div className="flex justify-center mb-2">
+        {/* Bottom Logos */}
+        <div className="mt-6 space-y-4">
+          <div className="flex justify-start">
             <img
               src="https://www.charusat.ac.in/_next/static/media/CHARUSAT_NEW.6cad095d.png"
               alt="Charusat Logo"
-              className="h-16 w-48 object-contain"
+              className="h-10 w-auto object-contain"
             />
           </div>
-          <div className="flex justify-center items-center space-x-8">
-            <img src="/depstar_logo.jpg" alt="DEPSTAR Logo" className="h-12 w-auto" />
-            <img src="/CSPIT_Logo.png" alt="CSPIT Logo" className="h-10 w-auto" />
+          <div className="flex justify-start items-center space-x-42">
+            <img src="/depstar_logo.jpg" alt="DEPSTAR Logo" className="h-16 w-auto" />
+            <img src="/CSPIT_Logo.png" alt="CSPIT Logo" className="h-12 w-auto" />
           </div>
         </div>
       </div>
     );
   };
   
+  
+
+
+
 
   return (
     <div className="flex flex-col h-screen w-full bg-background overflow-hidden">
@@ -237,10 +268,10 @@ export default function CppGenieChatSplit() {
             </Button>
             <Avatar className="h-7 w-7">
               <AvatarFallback className="bg-primary text-primary-foreground">
-                <Bot className="h-4 w-4" />
+                <img src="C++.png" className="h-10 w-8" />
               </AvatarFallback>
             </Avatar>
-            <span className="font-semibold text-base text-primary">Chat Interface</span>
+            <span className="font-semibold text-base text-primary">C++ Genie</span>
           </div>
 
           {/* Messages Area */}
@@ -259,7 +290,7 @@ export default function CppGenieChatSplit() {
                       {message.role === 'assistant' && (
                         <Avatar className="h-6 w-6 mt-1 flex-shrink-0">
                           <AvatarFallback className="bg-primary text-primary-foreground text-xs">
-                            <Bot className="h-4 w-4" />
+                            <img src="C++.png" className="h-7 w-8" />
                           </AvatarFallback>
                         </Avatar>
                       )}
