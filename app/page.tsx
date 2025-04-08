@@ -158,7 +158,7 @@ export default function CppGenieChatSplit() {
   };
   const SidebarContent = () => {
     return (
-      <div className="flex flex-col justify-between h-full px-6 py-6">
+      <div className="flex flex-col justify-between h-full px-6 pt-0 pb-6">
         {/* Top Content */}
         <div className="space-y-6">
           {/* Genie Logo */}
@@ -240,8 +240,6 @@ export default function CppGenieChatSplit() {
     );
   };
   
-  
-
 
 
 
