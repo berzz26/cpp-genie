@@ -162,20 +162,23 @@ export default function CppGenieChatSplit() {
         {/* Top Content */}
         <div className="space-y-6">
           {/* Genie Logo */}
-          <div className="flex justify-start">
+          <div className="flex justify-center items-center mb-4">
             <img
               src="/genie_logo.gif"
               alt="Genie Logo"
               className="h-16 w-auto object-contain"
             />
           </div>
-  
+
           {/* Text Content */}
-          <div className="text-sm text-muted-foreground space-y-1 text-left">
-            <p>A chat bot for Programming with C++</p>
-            
+          <div className="text-sm text-muted-foreground space-y-1 text-center">
+            <p>
+              Just Wish and Learn C++ 24x7 <br />
+              It's your class in a bot!
+            </p>
           </div>
-  
+
+
           {/* Features */}
           <div className="text-left">
             <p className="text-sm font-semibold mb-2">Features:</p>
@@ -197,7 +200,7 @@ export default function CppGenieChatSplit() {
               </li>
             </ul>
           </div>
-  
+
           {/* What Genie Can Do */}
           <div className="text-left">
             <p className="text-sm font-semibold mt-4 mb-2">What C++ Genie Can Do:</p>
@@ -210,25 +213,37 @@ export default function CppGenieChatSplit() {
             </ul>
           </div>
         </div>
-  
-        {/* Bottom Logos */}
-        <div className="mt-6 space-y-4">
-          <div className="flex justify-start">
-            <img
-              src="https://www.charusat.ac.in/_next/static/media/CHARUSAT_NEW.6cad095d.png"
-              alt="Charusat Logo"
-              className="h-10 w-auto object-contain"
-            />
-          </div>
-          <div className="flex justify-start items-center space-x-42">
-            <img src="/depstar_logo.jpg" alt="DEPSTAR Logo" className="h-16 w-auto" />
-            <img src="/CSPIT_Logo.png" alt="CSPIT Logo" className="h-12 w-auto" />
-          </div>
+
+        <div className="text-sm text-muted-foreground space-y-1 text-center">
+          <p>
+            Developed by <strong>Dr. Parth Goel</strong>, DEPSTAR-CSE. <br />
+            <a href="mailto:parthgoel.ce@charusat.ac.in" className="text-blue-500 underline">
+              parthgoel.ce@charusat.ac.in
+            </a>
+          </p>
         </div>
+
+
+        {/* Bottom Logos */}
+        <div className="mt-6 flex justify-start items-center gap-4 overflow-x-auto">
+          <img
+            src="https://www.charusat.ac.in/_next/static/media/CHARUSAT_NEW.6cad095d.png"
+            alt="Charusat Logo"
+            className="h-10 w-auto object-contain"
+          />
+          <img
+            src="/depstar_logo.jpg"
+            alt="DEPSTAR Logo"
+            className="h-12 w-auto object-contain"
+          />
+        </div>
+
+
+
       </div>
     );
   };
-  
+
 
 
 
@@ -352,21 +367,26 @@ export default function CppGenieChatSplit() {
 
       {/* Mobile Sidebar */}
       {sidebarOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden" onClick={() => setSidebarOpen(false)}>
+        <div
+          className="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden"
+          onClick={() => setSidebarOpen(false)}
+        >
           <div
-            className="fixed inset-y-0 left-0 w-3/4 max-w-xs bg-background border-r border-secondary/20 p-4 overflow-y-auto z-50"
+            className="fixed inset-y-0 left-0 w-3/4 max-w-xs bg-background border-r border-secondary/20 px-4 pt-3 pb-4 overflow-y-auto z-50"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="flex justify-between items-center mb-4">
-              <h2 className="font-bold">Menu</h2>
+            <div className="flex justify-between items-center mb-2">
+              <h2 className="font-bold text-base">Menu</h2>
               <Button variant="ghost" size="icon" onClick={() => setSidebarOpen(false)}>
                 <X className="h-5 w-5" />
               </Button>
             </div>
+
             <SidebarContent />
           </div>
         </div>
       )}
+
     </div>
   );
 }
