@@ -332,7 +332,7 @@ export default function CppGenieChatSplit() {
                     <div className="flex items-start space-x-2">
                       <Avatar className="h-6 w-6 mt-1 flex-shrink-0">
                         <AvatarFallback className="bg-primary text-primary-foreground text-xs">
-                          <Bot className="h-4 w-4" />
+                          <img src="C++.png" className="h-7 w-8" />
                         </AvatarFallback>
                       </Avatar>
                       <div className="rounded-lg px-3 py-2 bg-secondary text-secondary-foreground">

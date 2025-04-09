@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { supabase } from "@/lib/supabaseClient";
-import { log } from "console";
+import { handleGeminiChat } from "@/lib/handleGeminiChat";
 
 export async function POST(req: Request) {
   try {
@@ -12,7 +12,6 @@ export async function POST(req: Request) {
       throw new Error("Invalid request: No valid message found.");
     }
 
-    // Session ID handling
     let sessionId = cookies().get("sessionId")?.value;
     if (!sessionId) {
       sessionId = crypto.randomUUID();
@@ -24,29 +23,7 @@ export async function POST(req: Request) {
       });
     }
 
-    const n8nUrl = process.env.PROD_N8N_URL!;
-    console.log("Session ID:", sessionId);
-    console.log("Sending message to n8n:", lastMessage.content);
-
-    const response = await fetch(n8nUrl, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        message: lastMessage.content,
-        sessionId,
-      }),
-    });
-
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }else{
-      
-    }
-
-    const data = await response.json();
-    const assistantResponse = data.output || "No response";
-    console.log("Raw response from n8n:", data);
-
+    const assistantResponse = await handleGeminiChat(lastMessage.content, sessionId);
 
     // Save to Supabase
     const { error: insertError } = await supabase.from("prompts").insert([
@@ -57,12 +34,9 @@ export async function POST(req: Request) {
         timestamp: new Date().toISOString(),
       },
     ]);
+    if (insertError) console.error("Supabase insert error:", insertError);
 
-    if (insertError) {
-      console.error("Supabase insert error:", insertError);
-    }
-
-    return NextResponse.json(data);
+    return NextResponse.json({ output: assistantResponse });
   } catch (error) {
     console.error("Error in chat route:", error);
     return NextResponse.json(
