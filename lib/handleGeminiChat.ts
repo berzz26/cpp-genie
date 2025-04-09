@@ -4,7 +4,7 @@ import { ChatMessageHistory } from "langchain/memory";
 // In-memory message history store
 const sessionHistories: Record<string, ChatMessageHistory> = {};
 
-// System prompt (same as your n8n config)
+
 const systemPrompt = `You are an expert C++ programming assistant. Your task is to provide accurate, concise, and helpful answers related to C++ programming. Your responses should be limited to the following:
 
 C++ Programming Topics – Answer questions about C++ concepts and related programming topics in a clear and concise manner.
@@ -19,9 +19,7 @@ Variable Values: Assume specific values for variables in the code instead of lea
 Beginner-Friendly Approach: Avoid unnecessary jargon or complex syntax; keep it understandable.
 Comments for Clarity: Include comments where necessary to explain key parts of the code.`;
 
-/**
- * Helper to flatten Gemini's response format into a string.
- */
+\
 function flattenGeminiResponse(content: any): string {
   if (typeof content === "string") return content;
 
@@ -40,9 +38,7 @@ function flattenGeminiResponse(content: any): string {
   return JSON.stringify(content);
 }
 
-/**
- * Handles a single message from a user, returning Gemini's response.
- */
+
 export async function handleGeminiChat(message: string, sessionId: string): Promise<string> {
   const history = sessionHistories[sessionId] ?? new ChatMessageHistory();
   sessionHistories[sessionId] = history;
