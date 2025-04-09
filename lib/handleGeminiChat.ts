@@ -19,7 +19,7 @@ Variable Values: Assume specific values for variables in the code instead of lea
 Beginner-Friendly Approach: Avoid unnecessary jargon or complex syntax; keep it understandable.
 Comments for Clarity: Include comments where necessary to explain key parts of the code.`;
 
-\
+
 function flattenGeminiResponse(content: any): string {
   if (typeof content === "string") return content;
 
