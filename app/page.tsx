@@ -256,9 +256,9 @@ export default function CppGenieChatSplit() {
         </div>
 
         {/* Right Chat Panel */}
-        <div className="flex-1 flex flex-col h-full min-w-0"> {/* Added min-w-0 */}
-          {/* Chat Header */}
-          <div className="p-3 border-b border-secondary/20 flex items-center space-x-2 bg-secondary/10 flex-shrink-0">
+        <div className="flex-1 flex flex-col h-full min-w-0">
+          {/* Chat Header - Now fixed for mobile */}
+          <div className="p-3 border-b border-secondary/20 flex items-center space-x-2 bg-secondary/10 flex-shrink-0 sticky top-0 z-10">
             <Button
               variant="ghost"
               size="icon"
@@ -276,19 +276,19 @@ export default function CppGenieChatSplit() {
             <span className="font-semibold text-base text-primary">C++ Genie</span>
           </div>
 
-          {/* Messages Area */}
-          <div className="flex-1 overflow-hidden min-w-0"> {/* Added min-w-0 */}
-            <ScrollArea className="h-full px-4 py-2 w-full">
+          {/* Messages Area - Only this will scroll */}
+          <div className="flex-1 overflow-hidden min-w-0 relative">
+            <ScrollArea className="h-full px-4 py-2 w-full absolute inset-0">
               <div className="space-y-4 pb-4 w-full">
                 {messages.map((message) => (
                   <div
                     key={message.id}
                     className={cn(
-                      "flex w-full min-w-0", // Added min-w-0
+                      "flex w-full min-w-0",
                       message.role === "user" ? "justify-end" : "justify-start"
                     )}
                   >
-                    <div className="flex items-start space-x-2 max-w-[85%] min-w-0"> {/* Added min-w-0 */}
+                    <div className="flex items-start space-x-2 max-w-[85%] min-w-0">
                       {message.role === 'assistant' && (
                         <Avatar className="h-6 w-6 mt-1 flex-shrink-0">
                           <AvatarFallback className="bg-primary text-primary-foreground text-xs">
@@ -298,7 +298,7 @@ export default function CppGenieChatSplit() {
                       )}
                       <div
                         className={cn(
-                          "rounded-lg px-3 py-2 text-sm shadow-sm overflow-hidden w-full min-w-0", // Added min-w-0
+                          "rounded-lg px-3 py-2 text-sm shadow-sm overflow-hidden w-full min-w-0",
                           message.role === "user"
                             ? "bg-primary text-primary-foreground"
                             : "bg-secondary text-secondary-foreground"
@@ -306,7 +306,7 @@ export default function CppGenieChatSplit() {
                       >
                         {message.role === "assistant" ? (
                           <div
-                            className="markdown-body prose prose-sm max-w-none break-words min-w-0" // Added min-w-0
+                            className="markdown-body prose prose-sm max-w-none break-words min-w-0"
                             dangerouslySetInnerHTML={{
                               __html: formatCodeBlocks(message.content)
                             }}
@@ -346,14 +346,14 @@ export default function CppGenieChatSplit() {
             </ScrollArea>
           </div>
 
-          {/* Input Area */}
-          <div className="p-3 border-t border-secondary/20 bg-secondary/5 flex-shrink-0">
+          {/* Input Area - Now fixed for mobile */}
+          <div className="p-3 border-t border-secondary/20 bg-secondary/5 flex-shrink-0 sticky bottom-0 z-10">
             <form onSubmit={sendMessage} className="flex w-full items-center space-x-2">
               <Input
                 placeholder="Enter your C++ question!"
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
-                className="flex-1 min-w-0" // Added min-w-0
+                className="flex-1 min-w-0"
                 disabled={isLoading}
                 aria-label="Chat message input"
               />
@@ -365,7 +365,7 @@ export default function CppGenieChatSplit() {
         </div>
       </div>
 
-      {/* Mobile Sidebar */}
+      {/* Mobile Sidebar - No changes needed here */}
       {sidebarOpen && (
         <div
           className="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden"
@@ -386,7 +386,6 @@ export default function CppGenieChatSplit() {
           </div>
         </div>
       )}
-
     </div>
   );
 }
