@@ -16,11 +16,11 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "C++ assistant",
-  description: "AI-powered programming assistant to help answer your c++ related questions",
+  title: "C++ Genie",
+  description: "Just Wish and Learn C++ 24x7 It's your class in a bot!",
   openGraph: {
-    title: "Ai C++ tutor",
-    description: "Get answers to your c++ questions",
+    title: "C++ Genie",
+    description: "Just Wish and Learn C++ 24x7 It's your class in a bot!",
     type: "website",
   },
   viewport: "width=device-width, initial-scale=1",

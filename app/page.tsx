@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import Link from 'next/link';
 
 interface Message {
   id: string;
@@ -157,93 +158,94 @@ export default function CppGenieChatSplit() {
       .replace(/\n/g, '<br/>');
   };
   const SidebarContent = () => {
-  return (
-    <div className="flex flex-col h-full w-full">
-      {/* Top Content */}
-      <div className="flex-grow space-y-5 overflow-y-auto pb-4">
-        {/* Genie Logo */}
-        <div className="flex justify-center items-center py-3">
-          <img
-            src="/genie_logo.gif"
-            alt="Genie Logo"
-            className="h-16 w-auto object-contain"
-          />
+    return (
+      <div className="flex flex-col h-full w-full">
+        {/* Top Content */}
+        <div className="flex-grow  overflow-y-auto pb-4">
+          {/* Genie Logo */}
+          <div className="flex justify-center items-center py-3">
+            <img
+              src="/genie_logo.gif"
+              alt="Genie Logo"
+              className="h-16 w-auto object-contain"
+            />
+          </div>
+
+          {/* Text Content */}
+          <div className="text-sm text-muted-foreground space-y-1 text-center px-2">
+            <p>
+              Just Wish and Learn C++ 24x7 <br />
+              It's your class in a bot!
+            </p>
+          </div>
+
+          {/* Features */}
+          <div className="text-left px-2">
+            <p className="text-sm font-semibold mb-2">Features:</p>
+            <ul className="list-disc text-xs text-muted-foreground space-y-2 pl-5">
+              <li>
+                <strong>Guardrails:</strong> Safe, Unbiased, prevent misleading or harmful content.
+              </li>
+              <li>
+                <strong>Free to Use:</strong> Unlimited access anytime, anywhere.
+              </li>
+              <li>
+                <strong>Why Not ChatGPT?</strong>: ChatGPT gives general or complex code, while Genie provides simple, syllabus-based responses aligned with CEUC102 – Programming with C++.
+              </li>
+              <li>
+                <strong>C++ Only:</strong> Focused only on C++ – No confusion/distraction!
+              </li>
+              <li>
+                <strong>Student-Centric:</strong> Made for students, not general users.
+              </li>
+            </ul>
+          </div>
+
+
+          {/* <Link href="/features" className="text-blue-600 underline">See Features</Link> */}
+
+          {/* What Genie Can Do */}
+          <div className="text-left px-2">
+            <p className="text-sm font-semibold mt-4 mb-2">What C++ Genie Can Do:</p>
+            <ul className="list-disc text-xs md:text-sm text-muted-foreground space-y-2 pl-5">
+              <li>Answers query of your C++ concepts.</li>
+              <li>Helps in understanding problem-based questions.</li>
+              <li>Provides code examples & explanations.</li>
+              <li>Debugs your C++ code.</li>
+              <li>Explains errors in code.</li>
+            </ul>
+          </div>
         </div>
 
-        {/* Text Content */}
-        <div className="text-sm text-muted-foreground space-y-1 text-center px-2">
-          <p>
-            Just Wish and Learn C++ 24x7 <br />
-            It's your class in a bot!
-          </p>
-        </div>
+        {/* Footer Content */}
+        <div className="flex-shrink-0 mt-auto pt-4 border-t border-secondary/20">
+          {/* Developer Info */}
+          <div className="text-xs text-muted-foreground text-center mb-3">
+            <p>
+              Developed by <strong>Dr. Parth Goel</strong>, DEPSTAR-CSE.<br />
+              <a href="mailto:parthgoel.ce@charusat.ac.in" className="text-blue-500 underline">
+                parthgoel.ce@charusat.ac.in
+              </a>
+            </p>
+          </div>
 
-        {/* Features */}
-        <div className="text-left px-2">
-          <p className="text-sm font-semibold mb-2">Features:</p>
-          <ul className="list-disc text-xs text-muted-foreground space-y-2 pl-5">
-            <li>
-              <strong>Guardrails:</strong> Safe, Unbiased, prevent misleading or harmful content.
-            </li>
-            <li>
-              <strong>Free to Use:</strong> Unlimited access anytime, anywhere.
-            </li>
-            <li>
-              <strong>Why Not ChatGPT?</strong>: ChatGPT gives general or complex code. Genie gives simple and easy-to-understand responses as per syllabus/lecture notes CEUC102 – Programming with C++.
-            </li>
-            <li>
-              <strong>C++ Only:</strong> Focused only on C++ – No confusion/distraction!
-            </li>
-            <li>
-              <strong>Student-Centric:</strong> Made for students, not general users.
-            </li>
-          </ul>
-        </div>
-
-        {/* What Genie Can Do */}
-        <div className="text-left px-2">
-          <p className="text-sm font-semibold mt-4 mb-2">What C++ Genie Can Do:</p>
-          <ul className="list-disc text-xs text-muted-foreground space-y-2 pl-5">
-            <li>Answers query of your C++ concepts.</li>
-            <li>Helps in understanding problem-based questions.</li>
-            <li>Provides code examples & explanations.</li>
-            <li>Debugs your C++ code.</li>
-            <li>Explains errors in code.</li>
-          </ul>
+          {/* Bottom Logos */}
+          <div className="flex justify-center items-center gap-2 w-full">
+            <img
+              src="https://www.charusat.ac.in/_next/static/media/CHARUSAT_NEW.6cad095d.png"
+              alt="Charusat Logo"
+              className="h-8 w-auto object-contain"
+            />
+            <img
+              src="/depstar_logo.jpg"
+              alt="DEPSTAR Logo"
+              className="h-10 w-auto object-contain"
+            />
+          </div>
         </div>
       </div>
-
-      {/* Footer Content - Fixed at bottom */}
-      <div className="flex-shrink-0 mt-auto pt-4 border-t border-secondary/20">
-        {/* Developer Info */}
-        <div className="text-xs text-muted-foreground text-center mb-3">
-          <p>
-            Developed by <strong>Dr. Parth Goel</strong>, DEPSTAR-CSE.<br />
-            <a href="mailto:parthgoel.ce@charusat.ac.in" className="text-blue-500 underline">
-              parthgoel.ce@charusat.ac.in
-            </a>
-          </p>
-        </div>
-
-        {/* Bottom Logos */}
-        <div className="flex justify-center items-center gap-2 w-full">
-          <img
-            src="https://www.charusat.ac.in/_next/static/media/CHARUSAT_NEW.6cad095d.png"
-            alt="Charusat Logo"
-            className="h-8 w-auto object-contain"
-          />
-          <img
-            src="/depstar_logo.jpg"
-            alt="DEPSTAR Logo"
-            className="h-10 w-auto object-contain"
-          />
-        </div>
-      </div>
-    </div>
-  );
-};
-
-
+    );
+  };
 
   return (
     <div className="flex flex-col h-screen w-full bg-background overflow-hidden">

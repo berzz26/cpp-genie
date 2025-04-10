@@ -193,3 +193,18 @@
     @apply hidden;
   }
 }
+
+/* Media queries for phone views */
+@media (max-width: 768px) {
+  .markdown-body {
+    @apply text-base; /* Adjust font size for smaller screens */
+  }
+
+  .markdown-body code {
+    @apply text-base; /* Adjust font size for smaller screens */
+  }
+
+  .features-section {
+    @apply text-lg; /* Adjust font size for features section on smaller screens */
+  }
+}
