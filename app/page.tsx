@@ -157,93 +157,91 @@ export default function CppGenieChatSplit() {
       .replace(/\n/g, '<br/>');
   };
   const SidebarContent = () => {
-    return (
-      <div className="flex flex-col justify-between h-full px-6 pt-0 pb-6">
-        {/* Top Content */}
-        <div className="space-y-6">
-          {/* Genie Logo */}
-          <div className="flex justify-center items-center mb-4">
-            <img
-              src="/genie_logo.gif"
-              alt="Genie Logo"
-              className="h-16 w-auto object-contain"
-            />
-          </div>
-
-          {/* Text Content */}
-          <div className="text-sm text-muted-foreground space-y-1 text-center">
-            <p>
-              Just Wish and Learn C++ 24x7 <br />
-              It's your class in a bot!
-            </p>
-          </div>
-
-
-          {/* Features */}
-          <div className="text-left">
-            <p className="text-sm font-semibold mb-2">Features:</p>
-            <ul className="list-disc text-xs text-muted-foreground space-y-2 pl-5">
-              <li>
-                <strong>Guardrails:</strong> Safe, Unbiased, prevent misleading or harmful content.
-              </li>
-              <li>
-                <strong>Free to Use:</strong> Unlimited access anytime, anywhere.
-              </li>
-              <li>
-                <strong>Why Not ChatGPT?</strong>: ChatGPT gives general or complex code. Genie gives simple and easy-to-understand responses as per syllabus/lecture notes CEUC102 – Programming with C++.
-              </li>
-              <li>
-                <strong>C++ Only:</strong> Focused only on C++ – No confusion/distraction!
-              </li>
-              <li>
-                <strong>Student-Centric:</strong> Made for students, not general users.
-              </li>
-            </ul>
-          </div>
-
-          {/* What Genie Can Do */}
-          <div className="text-left">
-            <p className="text-sm font-semibold mt-4 mb-2">What C++ Genie Can Do:</p>
-            <ul className="list-disc text-xs text-muted-foreground space-y-2 pl-5">
-              <li>Answers query of your C++ concepts.</li>
-              <li>Helps in understanding problem-based questions.</li>
-              <li>Provides code examples & explanations.</li>
-              <li>Debugs your C++ code.</li>
-              <li>Explains errors in code.</li>
-            </ul>
-          </div>
+  return (
+    <div className="flex flex-col h-full w-full">
+      {/* Top Content */}
+      <div className="flex-grow space-y-5 overflow-y-auto pb-4">
+        {/* Genie Logo */}
+        <div className="flex justify-center items-center py-3">
+          <img
+            src="/genie_logo.gif"
+            alt="Genie Logo"
+            className="h-16 w-auto object-contain"
+          />
         </div>
 
-        <div className="text-sm text-muted-foreground space-y-1 text-center">
+        {/* Text Content */}
+        <div className="text-sm text-muted-foreground space-y-1 text-center px-2">
           <p>
-            Developed by <strong>Dr. Parth Goel</strong>, DEPSTAR-CSE. <br />
+            Just Wish and Learn C++ 24x7 <br />
+            It's your class in a bot!
+          </p>
+        </div>
+
+        {/* Features */}
+        <div className="text-left px-2">
+          <p className="text-sm font-semibold mb-2">Features:</p>
+          <ul className="list-disc text-xs text-muted-foreground space-y-2 pl-5">
+            <li>
+              <strong>Guardrails:</strong> Safe, Unbiased, prevent misleading or harmful content.
+            </li>
+            <li>
+              <strong>Free to Use:</strong> Unlimited access anytime, anywhere.
+            </li>
+            <li>
+              <strong>Why Not ChatGPT?</strong>: ChatGPT gives general or complex code. Genie gives simple and easy-to-understand responses as per syllabus/lecture notes CEUC102 – Programming with C++.
+            </li>
+            <li>
+              <strong>C++ Only:</strong> Focused only on C++ – No confusion/distraction!
+            </li>
+            <li>
+              <strong>Student-Centric:</strong> Made for students, not general users.
+            </li>
+          </ul>
+        </div>
+
+        {/* What Genie Can Do */}
+        <div className="text-left px-2">
+          <p className="text-sm font-semibold mt-4 mb-2">What C++ Genie Can Do:</p>
+          <ul className="list-disc text-xs text-muted-foreground space-y-2 pl-5">
+            <li>Answers query of your C++ concepts.</li>
+            <li>Helps in understanding problem-based questions.</li>
+            <li>Provides code examples & explanations.</li>
+            <li>Debugs your C++ code.</li>
+            <li>Explains errors in code.</li>
+          </ul>
+        </div>
+      </div>
+
+      {/* Footer Content - Fixed at bottom */}
+      <div className="flex-shrink-0 mt-auto pt-4 border-t border-secondary/20">
+        {/* Developer Info */}
+        <div className="text-xs text-muted-foreground text-center mb-3">
+          <p>
+            Developed by <strong>Dr. Parth Goel</strong>, DEPSTAR-CSE.<br />
             <a href="mailto:parthgoel.ce@charusat.ac.in" className="text-blue-500 underline">
               parthgoel.ce@charusat.ac.in
             </a>
           </p>
         </div>
 
-
         {/* Bottom Logos */}
-        <div className="mt-6 flex justify-start items-center gap-4 overflow-x-auto">
+        <div className="flex justify-center items-center gap-2 w-full">
           <img
             src="https://www.charusat.ac.in/_next/static/media/CHARUSAT_NEW.6cad095d.png"
             alt="Charusat Logo"
-            className="h-10 w-auto object-contain"
+            className="h-8 w-auto object-contain"
           />
           <img
             src="/depstar_logo.jpg"
             alt="DEPSTAR Logo"
-            className="h-12 w-auto object-contain"
+            className="h-10 w-auto object-contain"
           />
         </div>
-
-
-
       </div>
-    );
-  };
-
+    </div>
+  );
+};
 
 
 
@@ -256,9 +254,9 @@ export default function CppGenieChatSplit() {
         </div>
 
         {/* Right Chat Panel */}
-        <div className="flex-1 flex flex-col h-full min-w-0">
-          {/* Chat Header - Now fixed for mobile */}
-          <div className="p-3 border-b border-secondary/20 flex items-center space-x-2 bg-secondary/10 flex-shrink-0 sticky top-0 z-10">
+        <div className="flex-1 flex flex-col h-full min-w-0"> {/* Added min-w-0 */}
+          {/* Chat Header */}
+          <div className="p-3 border-b border-secondary/20 flex items-center space-x-2 bg-secondary/10 flex-shrink-0">
             <Button
               variant="ghost"
               size="icon"
@@ -276,19 +274,19 @@ export default function CppGenieChatSplit() {
             <span className="font-semibold text-base text-primary">C++ Genie</span>
           </div>
 
-          {/* Messages Area - Only this will scroll */}
-          <div className="flex-1 overflow-hidden min-w-0 relative">
-            <ScrollArea className="h-full px-4 py-2 w-full absolute inset-0">
+          {/* Messages Area */}
+          <div className="flex-1 overflow-hidden min-w-0"> {/* Added min-w-0 */}
+            <ScrollArea className="h-full px-4 py-2 w-full">
               <div className="space-y-4 pb-4 w-full">
                 {messages.map((message) => (
                   <div
                     key={message.id}
                     className={cn(
-                      "flex w-full min-w-0",
+                      "flex w-full min-w-0", // Added min-w-0
                       message.role === "user" ? "justify-end" : "justify-start"
                     )}
                   >
-                    <div className="flex items-start space-x-2 max-w-[85%] min-w-0">
+                    <div className="flex items-start space-x-2 max-w-[85%] min-w-0"> {/* Added min-w-0 */}
                       {message.role === 'assistant' && (
                         <Avatar className="h-6 w-6 mt-1 flex-shrink-0">
                           <AvatarFallback className="bg-primary text-primary-foreground text-xs">
@@ -298,7 +296,7 @@ export default function CppGenieChatSplit() {
                       )}
                       <div
                         className={cn(
-                          "rounded-lg px-3 py-2 text-sm shadow-sm overflow-hidden w-full min-w-0",
+                          "rounded-lg px-3 py-2 text-sm shadow-sm overflow-hidden w-full min-w-0", // Added min-w-0
                           message.role === "user"
                             ? "bg-primary text-primary-foreground"
                             : "bg-secondary text-secondary-foreground"
@@ -306,7 +304,7 @@ export default function CppGenieChatSplit() {
                       >
                         {message.role === "assistant" ? (
                           <div
-                            className="markdown-body prose prose-sm max-w-none break-words min-w-0"
+                            className="markdown-body prose prose-sm max-w-none break-words min-w-0" // Added min-w-0
                             dangerouslySetInnerHTML={{
                               __html: formatCodeBlocks(message.content)
                             }}
@@ -346,14 +344,14 @@ export default function CppGenieChatSplit() {
             </ScrollArea>
           </div>
 
-          {/* Input Area - Now fixed for mobile */}
-          <div className="p-3 border-t border-secondary/20 bg-secondary/5 flex-shrink-0 sticky bottom-0 z-10">
+          {/* Input Area */}
+          <div className="p-3 border-t border-secondary/20 bg-secondary/5 flex-shrink-0">
             <form onSubmit={sendMessage} className="flex w-full items-center space-x-2">
               <Input
                 placeholder="Enter your C++ question!"
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
-                className="flex-1 min-w-0"
+                className="flex-1 min-w-0" // Added min-w-0
                 disabled={isLoading}
                 aria-label="Chat message input"
               />
@@ -365,7 +363,7 @@ export default function CppGenieChatSplit() {
         </div>
       </div>
 
-      {/* Mobile Sidebar - No changes needed here */}
+      {/* Mobile Sidebar */}
       {sidebarOpen && (
         <div
           className="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden"
@@ -375,7 +373,7 @@ export default function CppGenieChatSplit() {
             className="fixed inset-y-0 left-0 w-3/4 max-w-xs bg-background border-r border-secondary/20 px-4 pt-3 pb-4 overflow-y-auto z-50"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="flex justify-between items-center mb-2">
+            <div className="flex justify-between items-center "> {/* Reduced mb-2 to mb-1 */}
               <h2 className="font-bold text-base">Menu</h2>
               <Button variant="ghost" size="icon" onClick={() => setSidebarOpen(false)}>
                 <X className="h-5 w-5" />
@@ -386,6 +384,7 @@ export default function CppGenieChatSplit() {
           </div>
         </div>
       )}
+
     </div>
   );
 }
