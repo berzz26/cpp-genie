@@ -159,20 +159,20 @@ export default function CppGenieChatSplit() {
   };
   const SidebarContent = () => {
     return (
-      <div className="flex flex-col h-full w-full">
+      <div className="flex flex-col w-full">
         {/* Top Content */}
-        <div className="flex-grow  overflow-y-auto pb-4">
+        <div className="overflow-y-auto">
           {/* Genie Logo */}
-          <div className="flex justify-center items-center py-3">
+          <div className="flex justify-center items-center">
             <img
               src="/genie_logo.gif"
               alt="Genie Logo"
-              className="h-16 w-auto object-contain"
+              className="h-20 w-auto object-contain"
             />
           </div>
 
           {/* Text Content */}
-          <div className="text-sm text-muted-foreground space-y-1 text-center px-2">
+          <div className="text-base lg:text-sm text-muted-foreground space-y-1 text-center px-2 mb-6">
             <p>
               Just Wish and Learn C++ 24x7 <br />
               It's your class in a bot!
@@ -181,8 +181,8 @@ export default function CppGenieChatSplit() {
 
           {/* Features */}
           <div className="text-left px-2">
-            <p className="text-sm font-semibold mb-2">Features:</p>
-            <ul className="list-disc text-xs text-muted-foreground space-y-2 pl-5">
+            <p className="text-base lg:text-sm font-semibold mb-2">Features:</p>
+            <ul className="list-disc text-sm lg:text-xs text-muted-foreground space-y-2 pl-5">
               <li>
                 <strong>Guardrails:</strong> Safe, Unbiased, prevent misleading or harmful content.
               </li>
@@ -201,13 +201,10 @@ export default function CppGenieChatSplit() {
             </ul>
           </div>
 
-
-          {/* <Link href="/features" className="text-blue-600 underline">See Features</Link> */}
-
           {/* What Genie Can Do */}
           <div className="text-left px-2">
-            <p className="text-sm font-semibold mt-4 mb-2">What C++ Genie Can Do:</p>
-            <ul className="list-disc text-xs md:text-sm text-muted-foreground space-y-2 pl-5">
+            <p className="text-base lg:text-sm font-semibold mt-4 mb-2">What C++ Genie Can Do:</p>
+            <ul className="list-disc text-sm lg:text-xs text-muted-foreground space-y-2 pl-5 mb-6">
               <li>Answers query of your C++ concepts.</li>
               <li>Helps in understanding problem-based questions.</li>
               <li>Provides code examples & explanations.</li>
@@ -217,8 +214,8 @@ export default function CppGenieChatSplit() {
           </div>
         </div>
 
-        {/* Footer Content */}
-        <div className="flex-shrink-0 mt-auto pt-4 border-t border-secondary/20">
+        {/* Footer Content - No longer fixed */}
+        <div className="flex-shrink-0 pt-4 border-t border-secondary/20">
           {/* Developer Info */}
           <div className="text-xs text-muted-foreground text-center mb-3">
             <p>
