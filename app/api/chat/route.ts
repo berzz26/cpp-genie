@@ -3,6 +3,7 @@ import { cookies } from "next/headers";
 import { supabase } from "@/lib/supabaseClient";
 import { handleOpenAIChat } from "@/lib/handleOpenAIChat";
 import crypto from "crypto";
+import { encoding_for_model } from "tiktoken";
 
 export async function POST(req: Request) {
   const encoder = new TextEncoder();
@@ -28,15 +29,21 @@ export async function POST(req: Request) {
       });
     }
 
+    // Token encoder for GPT-4o or GPT-3.5 (adjust if needed)
+    const encoderModel = encoding_for_model("gpt-4"); // or "gpt-3.5-turbo"
+    const inputTokens = encoderModel.encode(lastMessage.content).length;
+
     // Buffer to collect full streamed response
     let fullResponse = "";
+    let outputTokens = 0;
 
     // Start streaming response
     const streamResponse = handleOpenAIChat(
       lastMessage.content,
       sessionId,
       async (chunk) => {
-        fullResponse += chunk; // Append token to full response
+        fullResponse += chunk;
+        outputTokens += encoderModel.encode(chunk).length;
         await writer.write(encoder.encode(`data: ${JSON.stringify({ chunk })}\n\n`));
       }
     );
@@ -44,13 +51,11 @@ export async function POST(req: Request) {
     streamResponse.finally(async () => {
       writer.close();
 
-      // Get client IP
       const ip =
         req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ??
         req.headers.get("x-real-ip") ??
         "unknown";
 
-      // Save prompt + full response to Supabase
       const { error: insertError } = await supabase.from("prompts").insert([
         {
           session_id: sessionId,
@@ -58,12 +63,16 @@ export async function POST(req: Request) {
           response: fullResponse,
           ip_address: ip,
           timestamp: new Date().toISOString(),
+          input_tokens: inputTokens,
+          output_tokens: outputTokens,
         },
       ]);
 
       if (insertError) {
         console.error("Supabase insert error:", insertError);
       }
+
+      encoderModel.free(); // Clean up encoder instance
     });
 
     return new NextResponse(stream.readable, {
