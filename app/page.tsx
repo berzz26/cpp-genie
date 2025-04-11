@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Textarea } from "@/components/ui/textarea";
 import Link from 'next/link';
 
 interface Message {
@@ -65,6 +66,39 @@ export default function CppGenieChatSplit() {
   const [isLoading, setIsLoading] = React.useState(false);
   const [sidebarOpen, setSidebarOpen] = React.useState(false);
   const messagesEndRef = React.useRef<HTMLDivElement>(null);
+  const textAreaRef = React.useRef<HTMLTextAreaElement>(null);
+
+  const adjustTextAreaHeight = () => {
+    const textarea = textAreaRef.current;
+    if (textarea) {
+      if (!input.trim()) {
+        textarea.style.height = '44px';  // Reset to initial height
+        return;
+      }
+      textarea.style.height = 'auto';
+      const newHeight = Math.min(textarea.scrollHeight, 200); // Max height of 200px
+      textarea.style.height = `${newHeight}px`;
+    }
+  };
+
+  const resetTextArea = () => {
+    const textarea = textAreaRef.current;
+    if (textarea) {
+      textarea.style.height = '44px';
+    }
+  };
+
+  React.useEffect(() => {
+    adjustTextAreaHeight();
+  }, [input]);
+
+  React.useEffect(() => {
+    // Initialize textarea height on mount
+    const textarea = textAreaRef.current;
+    if (textarea) {
+      textarea.style.height = '44px';  // Initial height including padding
+    }
+  }, []);
 
   React.useEffect(() => {
     const styleElement = document.createElement('style');
@@ -98,6 +132,7 @@ export default function CppGenieChatSplit() {
 
     setMessages((prev) => [...prev, userMessage]);
     setInput("");
+    resetTextArea();  // Add this line
     setIsLoading(true);
 
     if (window.innerWidth < 1024 && sidebarOpen) {
@@ -354,16 +389,34 @@ export default function CppGenieChatSplit() {
 
           {/* Input Area */}
           <div className="p-3 border-t border-secondary/20 bg-secondary/5 flex-shrink-0">
-            <form onSubmit={sendMessage} className="flex w-full items-center space-x-2">
-              <Input
-                placeholder="Enter your C++ question!"
+            <form onSubmit={sendMessage} className="flex w-full items-end space-x-2">
+              <Textarea
+                ref={textAreaRef}
+                placeholder="Enter your C++ question! "
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
-                className="flex-1 min-w-0" // Added min-w-0
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    if (input.trim() && !isLoading) {
+                      sendMessage(e);
+                    }
+                  }
+                }}
+                className="flex-1 min-h-[44px] overflow-y-auto resize-none whitespace-pre-wrap transition-height duration-100 py-2"
                 disabled={isLoading}
-                aria-label="Chat message input"
+                style={{ 
+                  maxHeight: '200px',
+                  height: '44px'
+                }}
               />
-              <Button type="submit" size="icon" disabled={isLoading || input.trim().length === 0} aria-label="Send message">
+              <Button 
+                type="submit" 
+                size="icon" 
+                className="mb-[3px]"
+                disabled={isLoading || input.trim().length === 0} 
+                aria-label="Send message"
+              >
                 {isLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Send className="h-4 w-4" />}
               </Button>
             </form>
