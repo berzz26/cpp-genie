@@ -1,8 +1,10 @@
 import { NextResponse } from "next/server";
-import { cookies } from "next/headers";
 import { supabase } from "@/lib/supabaseClient";
 import { handleOpenAIChat } from "@/lib/handleOpenAIChat";
-import crypto from "crypto";
+
+export const config = {
+  runtime: "edge",
+};
 
 export async function POST(req: Request) {
   const encoder = new TextEncoder();
@@ -17,26 +19,26 @@ export async function POST(req: Request) {
       throw new Error("Invalid request: No valid message found.");
     }
 
-    let sessionId = cookies().get("sessionId")?.value;
+    const cookieHeader = req.headers.get("cookie") || "";
+    const sessionCookie = cookieHeader
+      .split(";")
+      .find((c) => c.trim().startsWith("sessionId="));
+    let sessionId = sessionCookie?.split("=")[1];
+
+    // Generate session ID if not found
     if (!sessionId) {
-      sessionId = crypto.randomUUID();
-      cookies().set("sessionId", sessionId, {
-        httpOnly: true,
-        secure: true,
-        sameSite: "lax",
-        maxAge: 60 * 60 * 24,
-      });
+      const array = new Uint8Array(16);
+      crypto.getRandomValues(array);
+      sessionId = Array.from(array, (b) => b.toString(16).padStart(2, "0")).join("");
     }
 
-    // Buffer to collect full streamed response
     let fullResponse = "";
 
-    // Start streaming response
     const streamResponse = handleOpenAIChat(
       lastMessage.content,
       sessionId,
       async (chunk) => {
-        fullResponse += chunk; // Append token to full response
+        fullResponse += chunk;
         await writer.write(encoder.encode(`data: ${JSON.stringify({ chunk })}\n\n`));
       }
     );
@@ -44,13 +46,11 @@ export async function POST(req: Request) {
     streamResponse.finally(async () => {
       writer.close();
 
-      // Get client IP
       const ip =
         req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ??
         req.headers.get("x-real-ip") ??
         "unknown";
 
-      // Save prompt + full response to Supabase
       const { error: insertError } = await supabase.from("prompts").insert([
         {
           session_id: sessionId,
@@ -66,13 +66,17 @@ export async function POST(req: Request) {
       }
     });
 
-    return new NextResponse(stream.readable, {
+    // Set sessionId cookie in Edge-compatible way
+    const response = new NextResponse(stream.readable, {
       headers: {
         "Content-Type": "text/event-stream",
         "Cache-Control": "no-cache",
         "Connection": "keep-alive",
+        "Set-Cookie": `sessionId=${sessionId}; Path=/; Max-Age=86400; HttpOnly; SameSite=Lax; Secure`,
       },
     });
+
+    return response;
   } catch (error) {
     await writer.close();
     console.error("Error in chat route:", error);
