@@ -3,9 +3,30 @@ import { cookies } from "next/headers";
 import { supabase } from "@/lib/supabaseClient";
 import { handleGeminiChat } from "@/lib/handleGeminiChat";
 import { rateLimiter } from "@/lib/rateLimiter";
+import { globalRateLimiter } from "@/lib/globalRateLimiter";
 import crypto from "crypto";
 
 export async function POST(req: Request) {
+  // Check global rate limit first
+  if (globalRateLimiter.isRateLimited()) {
+    const timeToReset = globalRateLimiter.getTimeToReset();
+    return new NextResponse(
+      JSON.stringify({
+        error: "Global rate limit exceeded",
+        message: `Server is currently busy. Please wait ${Math.ceil(
+          timeToReset / 1000
+        )} seconds and try again.`,
+      }),
+      {
+        status: 429,
+        headers: {
+          "Content-Type": "application/json",
+          "X-RateLimit-Reset": String(timeToReset),
+        },
+      }
+    );
+  }
+
   // Get or create session ID
   const cookieStore = cookies();
   let sessionId = cookieStore.get("sessionId")?.value;
@@ -20,7 +41,7 @@ export async function POST(req: Request) {
     });
   }
 
-  // Check rate limit
+  // Check user rate limit
   if (rateLimiter.isRateLimited(sessionId)) {
     const timeToReset = rateLimiter.getTimeToReset(sessionId);
     return new NextResponse(
