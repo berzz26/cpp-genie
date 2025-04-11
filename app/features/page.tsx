@@ -62,11 +62,13 @@ export default function FeaturesPage() {
           className="fixed inset-0 bg-black bg-opacity-70 flex justify-center items-center z-50"
           onClick={() => setActiveImage(null)}
         >
-          <img
-            src={activeImage}
-            className="max-w-full max-h-full rounded-lg transition-transform scale-100 hover:scale-105"
-            alt="Zoomed feature"
-          />
+          <div className="max-w-[80%] max-h-[80vh] p-4">
+            <img
+              src={activeImage}
+              className="w-full h-full object-contain rounded-lg transition-transform scale-100 hover:scale-105"
+              alt="Zoomed feature"
+            />
+          </div>
         </div>
       )}
     </div>
