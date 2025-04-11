@@ -4,8 +4,6 @@ import { supabase } from "@/lib/supabaseClient";
 import { handleOpenAIChat } from "@/lib/handleOpenAIChat";
 import crypto from "crypto";
 
-
-
 export async function POST(req: Request) {
   const encoder = new TextEncoder();
   const stream = new TransformStream();
@@ -39,7 +37,7 @@ export async function POST(req: Request) {
       sessionId,
       async (chunk) => {
         fullResponse += chunk; // Append token to full response
-        await writer.write(encoder.encode(data: ${JSON.stringify({ chunk })}\n\n));
+        await writer.write(encoder.encode(`data: ${JSON.stringify({ chunk })}\n\n`));
       }
     );
 
