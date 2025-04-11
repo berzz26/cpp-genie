@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { supabase } from "@/lib/supabaseClient";
 import { handleGeminiChat } from "@/lib/handleGeminiChat";
+import crypto from "crypto";
 
 export async function POST(req: Request) {
   try {
@@ -25,12 +26,19 @@ export async function POST(req: Request) {
 
     const assistantResponse = await handleGeminiChat(lastMessage.content, sessionId);
 
+    // Get client IP address
+    const ip =
+      req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ??
+      req.headers.get("x-real-ip") ??
+      "unknown";
+
     // Save to Supabase
     const { error: insertError } = await supabase.from("prompts").insert([
       {
         session_id: sessionId,
         prompt: lastMessage.content,
         response: assistantResponse,
+        ip_address: ip, // make sure your DB has this column (type: INET or TEXT)
         timestamp: new Date().toISOString(),
       },
     ]);
