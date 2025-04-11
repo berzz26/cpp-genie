@@ -132,12 +132,8 @@ export default function CppGenieChatSplit() {
 
     setMessages((prev) => [...prev, userMessage]);
     setInput("");
-    resetTextArea();  // Add this line
+    resetTextArea();
     setIsLoading(true);
-
-    if (window.innerWidth < 1024 && sidebarOpen) {
-      setSidebarOpen(false);
-    }
 
     try {
       const response = await fetch("/api/chat", {
@@ -146,9 +142,21 @@ export default function CppGenieChatSplit() {
         body: JSON.stringify({ messages: [...messages, userMessage] }),
       });
 
-      if (!response.ok) throw new Error(`Server error: ${response.statusText}`);
-
       const data = await response.json();
+
+      if (response.status === 429) {
+        setMessages((prev) => [
+          ...prev,
+          {
+            id: crypto.randomUUID(),
+            role: "assistant",
+            content: `⚠️ ${data.message}`,
+          },
+        ]);
+        return;
+      }
+
+      if (!response.ok) throw new Error(`Server error: ${response.statusText}`);
 
       const assistantMessage: Message = {
         id: crypto.randomUUID(),
@@ -234,16 +242,15 @@ export default function CppGenieChatSplit() {
                 <strong>Student-Centric:</strong> Made for students, not general users.
               </li>
             </ul>
-            
+
           </div>
-          {/* <Link 
-            href="/features" 
+          <Link
+            href="/features"
             className="text-blue-500 hover:underline px-2"
-            target="_blank"
-            rel="noopener noreferrer"
+
           >
             Explore more
-          </Link> */}
+          </Link>
 
           {/* What Genie Can Do */}
           <div className="text-left px-2">
@@ -405,16 +412,16 @@ export default function CppGenieChatSplit() {
                 }}
                 className="flex-1 min-h-[44px] overflow-y-auto resize-none whitespace-pre-wrap transition-height duration-100 py-2"
                 disabled={isLoading}
-                style={{ 
+                style={{
                   maxHeight: '200px',
                   height: '44px'
                 }}
               />
-              <Button 
-                type="submit" 
-                size="icon" 
+              <Button
+                type="submit"
+                size="icon"
                 className="mb-[3px]"
-                disabled={isLoading || input.trim().length === 0} 
+                disabled={isLoading || input.trim().length === 0}
                 aria-label="Send message"
               >
                 {isLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Send className="h-4 w-4" />}
