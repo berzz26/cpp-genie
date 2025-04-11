@@ -132,12 +132,18 @@ export default function CppGenieChatSplit() {
 
     setMessages((prev) => [...prev, userMessage]);
     setInput("");
-    resetTextArea();  // Add this line
+    resetTextArea();
     setIsLoading(true);
 
-    if (window.innerWidth < 1024 && sidebarOpen) {
-      setSidebarOpen(false);
-    }
+    const responseMessageId = crypto.randomUUID();
+    setMessages((prev) => [
+      ...prev,
+      {
+        id: responseMessageId,
+        role: "assistant",
+        content: "",
+      },
+    ]);
 
     try {
       const response = await fetch("/api/chat", {
@@ -146,17 +152,38 @@ export default function CppGenieChatSplit() {
         body: JSON.stringify({ messages: [...messages, userMessage] }),
       });
 
-      if (!response.ok) throw new Error(`Server error: ${response.statusText}`);
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.message || `Server error: ${response.statusText}`);
+      }
 
-      const data = await response.json();
+      const reader = response.body?.getReader();
+      if (!reader) throw new Error("No response stream available");
 
-      const assistantMessage: Message = {
-        id: crypto.randomUUID(),
-        role: "assistant",
-        content: data.output || data.message || "Sorry, I encountered an error.",
-      };
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
 
-      setMessages((prev) => [...prev, assistantMessage]);
+        const chunk = new TextDecoder().decode(value);
+        const lines = chunk.split('\n');
+
+        for (const line of lines) {
+          if (line.startsWith('data: ')) {
+            try {
+              const data = JSON.parse(line.slice(6));
+              setMessages((prev) => 
+                prev.map((msg) =>
+                  msg.id === responseMessageId
+                    ? { ...msg, content: msg.content + (data.chunk || '') }
+                    : msg
+                )
+              );
+            } catch (e) {
+              console.error('Error parsing chunk:', e);
+            }
+          }
+        }
+      }
     } catch (error) {
       console.error("Chat error:", error);
       setMessages((prev) => [
@@ -325,11 +352,11 @@ export default function CppGenieChatSplit() {
                   <div
                     key={message.id}
                     className={cn(
-                      "flex w-full min-w-0", // Added min-w-0
+                      "flex w-full min-w-0",
                       message.role === "user" ? "justify-end" : "justify-start"
                     )}
                   >
-                    <div className="flex items-start space-x-2 max-w-[85%] min-w-0"> {/* Added min-w-0 */}
+                    <div className="flex items-start space-x-2 max-w-[85%] min-w-0">
                       {message.role === 'assistant' && (
                         <Avatar className="h-6 w-6 mt-1 flex-shrink-0">
                           <AvatarFallback className="bg-primary text-primary-foreground text-xs">
@@ -339,19 +366,23 @@ export default function CppGenieChatSplit() {
                       )}
                       <div
                         className={cn(
-                          "rounded-lg px-3 py-2 text-sm shadow-sm overflow-hidden w-full min-w-0", // Added min-w-0
+                          "rounded-lg px-3 py-2 text-sm shadow-sm overflow-hidden w-full min-w-0",
                           message.role === "user"
                             ? "bg-primary text-primary-foreground"
                             : "bg-secondary text-secondary-foreground"
                         )}
                       >
                         {message.role === "assistant" ? (
-                          <div
-                            className="markdown-body prose prose-sm max-w-none break-words min-w-0" // Added min-w-0
-                            dangerouslySetInnerHTML={{
-                              __html: formatCodeBlocks(message.content)
-                            }}
-                          />
+                          message.content === "" && isLoading ? (
+                            <Loader2 className="h-4 w-4 animate-spin" />
+                          ) : (
+                            <div
+                              className="markdown-body prose prose-sm max-w-none break-words min-w-0"
+                              dangerouslySetInnerHTML={{
+                                __html: formatCodeBlocks(message.content)
+                              }}
+                            />
+                          )
                         ) : (
                           <div className="whitespace-pre-wrap break-words">
                             {message.content}
@@ -368,20 +399,6 @@ export default function CppGenieChatSplit() {
                     </div>
                   </div>
                 ))}
-                {isLoading && (
-                  <div className="flex justify-start w-full">
-                    <div className="flex items-start space-x-2">
-                      <Avatar className="h-6 w-6 mt-1 flex-shrink-0">
-                        <AvatarFallback className="bg-primary text-primary-foreground text-xs">
-                          <img src="C++.png" className="h-7 w-8" />
-                        </AvatarFallback>
-                      </Avatar>
-                      <div className="rounded-lg px-3 py-2 bg-secondary text-secondary-foreground">
-                        <Loader2 className="h-4 w-4 animate-spin" />
-                      </div>
-                    </div>
-                  </div>
-                )}
                 <div ref={messagesEndRef} />
               </div>
             </ScrollArea>
