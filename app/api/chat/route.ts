@@ -1,9 +1,10 @@
 import { NextResponse } from "next/server";
-import { cookies } from "next/headers";
 import { supabase } from "@/lib/supabaseClient";
 import { handleOpenAIChat } from "@/lib/handleOpenAIChat";
-import crypto from "crypto";
-import { encoding_for_model } from "tiktoken";
+
+export const config = {
+  runtime: "edge",
+};
 
 export async function POST(req: Request) {
   const encoder = new TextEncoder();
@@ -18,32 +19,26 @@ export async function POST(req: Request) {
       throw new Error("Invalid request: No valid message found.");
     }
 
-    let sessionId = cookies().get("sessionId")?.value;
+    const cookieHeader = req.headers.get("cookie") || "";
+    const sessionCookie = cookieHeader
+      .split(";")
+      .find((c) => c.trim().startsWith("sessionId="));
+    let sessionId = sessionCookie?.split("=")[1];
+
+    // Generate session ID if not found
     if (!sessionId) {
-      sessionId = crypto.randomUUID();
-      cookies().set("sessionId", sessionId, {
-        httpOnly: true,
-        secure: true,
-        sameSite: "lax",
-        maxAge: 60 * 60 * 24,
-      });
+      const array = new Uint8Array(16);
+      crypto.getRandomValues(array);
+      sessionId = Array.from(array, (b) => b.toString(16).padStart(2, "0")).join("");
     }
 
-    // Token encoder for GPT-4o or GPT-3.5 (adjust if needed)
-    const encoderModel = encoding_for_model("gpt-4"); // or "gpt-3.5-turbo"
-    const inputTokens = encoderModel.encode(lastMessage.content).length;
-
-    // Buffer to collect full streamed response
     let fullResponse = "";
-    let outputTokens = 0;
 
-    // Start streaming response
     const streamResponse = handleOpenAIChat(
       lastMessage.content,
       sessionId,
       async (chunk) => {
         fullResponse += chunk;
-        outputTokens += encoderModel.encode(chunk).length;
         await writer.write(encoder.encode(`data: ${JSON.stringify({ chunk })}\n\n`));
       }
     );
@@ -63,25 +58,25 @@ export async function POST(req: Request) {
           response: fullResponse,
           ip_address: ip,
           timestamp: new Date().toISOString(),
-          input_tokens: inputTokens,
-          output_tokens: outputTokens,
         },
       ]);
 
       if (insertError) {
         console.error("Supabase insert error:", insertError);
       }
-
-      encoderModel.free(); // Clean up encoder instance
     });
 
-    return new NextResponse(stream.readable, {
+    // Set sessionId cookie in Edge-compatible way
+    const response = new NextResponse(stream.readable, {
       headers: {
         "Content-Type": "text/event-stream",
         "Cache-Control": "no-cache",
         "Connection": "keep-alive",
+        "Set-Cookie": `sessionId=${sessionId}; Path=/; Max-Age=86400; HttpOnly; SameSite=Lax; Secure`,
       },
     });
+
+    return response;
   } catch (error) {
     await writer.close();
     console.error("Error in chat route:", error);
