@@ -28,36 +28,43 @@ export async function POST(req: Request) {
       });
     }
 
+    // Buffer to collect full streamed response
+    let fullResponse = "";
+
     // Start streaming response
     const streamResponse = handleOpenAIChat(
       lastMessage.content,
       sessionId,
       async (chunk) => {
+        fullResponse += chunk; // Append token to full response
         await writer.write(encoder.encode(`data: ${JSON.stringify({ chunk })}\n\n`));
       }
     );
 
-    streamResponse.finally(() => {
+    streamResponse.finally(async () => {
       writer.close();
+
+      // Get client IP
+      const ip =
+        req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ??
+        req.headers.get("x-real-ip") ??
+        "unknown";
+
+      // Save prompt + full response to Supabase
+      const { error: insertError } = await supabase.from("prompts").insert([
+        {
+          session_id: sessionId,
+          prompt: lastMessage.content,
+          response: fullResponse,
+          ip_address: ip,
+          timestamp: new Date().toISOString(),
+        },
+      ]);
+
+      if (insertError) {
+        console.error("Supabase insert error:", insertError);
+      }
     });
-
-    // Get client IP address
-    const ip =
-      req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ??
-      req.headers.get("x-real-ip") ??
-      "unknown";
-
-    // Save to Supabase
-    const { error: insertError } = await supabase.from("prompts").insert([
-      {
-        session_id: sessionId,
-        prompt: lastMessage.content,
-        response: null, // Response is streamed, so no full response to save
-        ip_address: ip, // make sure your DB has this column (type: INET or TEXT)
-        timestamp: new Date().toISOString(),
-      },
-    ]);
-    if (insertError) console.error("Supabase insert error:", insertError);
 
     return new NextResponse(stream.readable, {
       headers: {
