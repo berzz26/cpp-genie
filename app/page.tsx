@@ -153,8 +153,20 @@ export default function CppGenieChatSplit() {
       });
 
       if (!response.ok) {
-        const error = await response.json();
-        throw new Error(error.message || `Server error: ${response.statusText}`);
+        // Remove the last two messages (user message and empty assistant message)
+        setMessages(messages => messages.slice(0, -2));
+        
+        if (response.status === 429) {
+          setMessages(messages => [...messages, {
+            id: crypto.randomUUID(),
+            role: "assistant",
+            content: "Rate limit exceeded. Please try again after a minute.",
+          }]);
+        } else {
+          const error = await response.json();
+          throw new Error(error.message || `Server error: ${response.statusText}`);
+        }
+        return;
       }
 
       const reader = response.body?.getReader();
