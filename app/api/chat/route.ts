@@ -1,9 +1,9 @@
 import { NextResponse } from "next/server";
 import { supabase } from "@/lib/supabaseClient";
 import { handleOpenAIChat } from "@/lib/handleOpenAIChat";
+import { checkRateLimit } from "@/lib/rateLimiter";
 
 export const runtime = "edge";
-
 
 export async function POST(req: Request) {
   const encoder = new TextEncoder();
@@ -29,6 +29,14 @@ export async function POST(req: Request) {
       const array = new Uint8Array(16);
       crypto.getRandomValues(array);
       sessionId = Array.from(array, (b) => b.toString(16).padStart(2, "0")).join("");
+    }
+
+    // Check rate limit
+    if (!checkRateLimit(sessionId)) {
+      return NextResponse.json(
+        { error: "Rate limit exceeded. Please try again later." },
+        { status: 429 }
+      );
     }
 
     let fullResponse = "";
