@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { supabase } from "@/lib/supabaseClient";
 import { handleOpenAIChat } from "@/lib/handleOpenAIChat";
 import { checkRateLimit } from "@/lib/rateLimiter";
+import { isValidOrigin } from "@/lib/security";
 
 export const runtime = "edge";
 
@@ -11,6 +12,14 @@ export async function POST(req: Request) {
   const writer = stream.writable.getWriter();
 
   try {
+    const origin = req.headers.get('origin');
+    if (!isValidOrigin(origin)) {
+      return NextResponse.json(
+        { error: "Forbidden: Invalid origin" },
+        { status: 403 }
+      );
+    }
+
     const { messages } = await req.json();
     const lastMessage = messages[messages.length - 1];
 
