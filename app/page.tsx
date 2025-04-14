@@ -275,14 +275,16 @@ export default function CppGenieChatSplit() {
             </ul>
             
           </div>
-          {/* <Link 
-            href="/features" 
-            className="text-blue-500 hover:underline px-2"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Explore more
-          </Link> */}
+          <div className="flex justify-center w-full">
+            <Link 
+              href="/features" 
+              className="text-blue-600 hover:underline px-4 pt-4  inline-block"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Explore more
+            </Link>
+          </div>
 
           {/* What Genie Can Do */}
           <div className="text-left px-2">
@@ -300,12 +302,14 @@ export default function CppGenieChatSplit() {
         {/* Footer Content - No longer fixed */}
         <div className="flex-shrink-0 pt-6 border-t border-secondary/20">
           {/* Developer Info */}
-          <div className="text-xs text-muted-foreground text-center mb-4">
+          <div className="text-muted-foreground text-center mb-6">
             <p>
-              Developed by <strong>Dr. Parth Goel</strong>, DEPSTAR-CSE.<br />
-              <a href="mailto:parthgoel.ce@charusat.ac.in" className="text-blue-500 underline">
-                parthgoel.ce@charusat.ac.in
-              </a>
+              <Link 
+                href="/contact" 
+                className="text-blue-500 hover:underline text-base font-medium py-1 px-2 inline-block"
+              >
+                Contact Us
+              </Link>
             </p>
           </div>
 

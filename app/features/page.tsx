@@ -21,12 +21,14 @@ const features = [
   {
     title: 'C++ Only',
     description: 'Focused only on C++ – No confusion/distraction!',
-    image: '',
+    image: '/images/CPP_FOCUS.png',
   },
   {
     title: 'Student-Centric',
     description: 'Made for students, not general users.',
-    image: '',
+    video: '/video/student.mp4',
+    type: 'video',
+    thumbnail: '/images/thumbnail1.png' // Add thumbnail path
   },
 ];
 
@@ -44,7 +46,16 @@ export default function FeaturesPage() {
           >
             <h2 className="text-xl font-semibold mb-2">{feature.title}</h2>
             <p className="mb-4">{feature.description}</p>
-            {feature.image && (
+            {feature.type === 'video' ? (
+              <video 
+                controls 
+                className="w-full rounded-lg"
+                poster={feature.thumbnail}
+              >
+                <source src={feature.video} type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
+            ) : feature.image && (
               <img
                 src={feature.image}
                 alt={feature.title}
