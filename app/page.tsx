@@ -221,6 +221,8 @@ export default function CppGenieChatSplit() {
     });
 
     return formattedContent
+      .replace(/^### (.*?)$/gm, '<h3 class="text-lg font-bold my-2">$1</h3>')
+      .replace(/^#### (.*?)$/gm, '<h4 class="text-base font-semibold my-2">$1</h4>')
       .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
       .replace(/\*(.*?)\*/g, '<em>$1</em>')
       .replace(/^- (.*?)$/gm, '<li>$1</li>')
@@ -231,6 +233,7 @@ export default function CppGenieChatSplit() {
       .replace(/\n\n/g, '<br/><br/>')
       .replace(/\n/g, '<br/>');
   };
+
   const SidebarContent = () => {
     return (
       <div className="flex flex-col w-full">
