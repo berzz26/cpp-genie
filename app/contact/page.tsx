@@ -31,7 +31,7 @@ const ContactPage = () => {
                                         className="w-full h-full object-cover object-center"
                                         style={{ objectPosition: 'center 20%' }}
                                     />
-                                </div>
+                                </div>k
                                 <h2 className="text-2xl font-semibold text-primary">Dr. Parth Goel</h2>
                                 <p className="text-center text-muted-foreground mt-2">Mentor | Concept Designer | LLM Engineer</p>
                                 <p className="text-lg text-muted-foreground mt-1">DEPSTAR-CSE</p>
