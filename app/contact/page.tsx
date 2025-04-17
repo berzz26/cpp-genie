@@ -31,7 +31,7 @@ const ContactPage = () => {
                                         className="w-full h-full object-cover object-center"
                                         style={{ objectPosition: 'center 20%' }}
                                     />
-                                </div>k
+                                </div>
                                 <h2 className="text-2xl font-semibold text-primary">Dr. Parth Goel</h2>
                                 <p className="text-center text-muted-foreground mt-2">Mentor | Concept Designer | LLM Engineer</p>
                                 <p className="text-lg text-muted-foreground mt-1">DEPSTAR-CSE</p>
@@ -46,9 +46,10 @@ const ContactPage = () => {
                             <div className="flex flex-col items-center">
                                 <div className="w-40 h-40 rounded-full bg-secondary mb-6 overflow-hidden flex items-center justify-center">
                                     <img
-                                        src="/placeholder-developer.jpg"
+                                        src="/Profile.png"
                                         alt="Lead Developer"
-                                        className="w-full h-full object-cover"
+                                        className="w-full h-full object-cover object-center scale-125"
+                                        style={{ objectPosition: 'center 30%' }}
                                     />
                                 </div>
                                 <h2 className="text-2xl font-semibold text-primary">Aum Tamboli</h2>

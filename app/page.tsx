@@ -278,9 +278,7 @@ export default function CppGenieChatSplit() {
           <div className="flex justify-center w-full">
             <Link 
               href="/features" 
-              className="text-blue-600 hover:underline px-4 pt-4  inline-block"
-              target="_blank"
-              rel="noopener noreferrer"
+              className="text-blue-600 hover:underline px-4 pt-2 inline-block"
             >
               Explore more
             </Link>

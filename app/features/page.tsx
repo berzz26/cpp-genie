@@ -1,6 +1,9 @@
 'use client';
 
 import { useState } from 'react';
+import { ArrowLeft } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 const features = [
   {
@@ -15,8 +18,8 @@ const features = [
   },
   {
     title: 'Why Not ChatGPT?',
-    description: 'Built for CEUC102, not CS PhDs.” “Tailored for college lectures, not corporate interviews.',
-    image: '',
+    description: 'ChatGPT gives general or complex code, while Genie provides simple, syllabus-based responses aligned with CEUC102 – Programming with C++',
+    image: '/images/Diff.png',
   },
   {
     title: 'C++ Only',
@@ -37,6 +40,14 @@ export default function FeaturesPage() {
 
   return (
     <div className="p-4 md:p-8 bg-white text-blue-900">
+      {/* Back Button */}
+      <Link href="/">
+        <Button variant="ghost" className="mb-4">
+          <ArrowLeft className="h-5 w-5 mr-2" />
+          <span className="text-lg">Back to Chat</span>
+        </Button>
+      </Link>
+
       <h1 className="text-3xl font-bold mb-6 text-center">Features</h1>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {features.map((feature, index) => (
