@@ -46,9 +46,9 @@ const ContactPage = () => {
                             <div className="flex flex-col items-center">
                                 <div className="w-40 h-40 rounded-full bg-secondary mb-6 overflow-hidden flex items-center justify-center">
                                     <img
-                                        src="/Profile.png"
+                                        src="/Profile_2.png"
                                         alt="Lead Developer"
-                                        className="w-full h-full object-cover object-center scale-125"
+                                        className="w-full h-full object-cover object-center scale-100"
                                         style={{ objectPosition: 'center 30%' }}
                                     />
                                 </div>
