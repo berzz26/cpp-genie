@@ -1,36 +1,47 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# C++ Chatbot Assistant 
 
-## Getting Started
+A smart C++ learning assistant built with **Next.js**, designed to help students understand C++ concepts through real-world scenarios.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Features
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- Explains C++ concepts using banking system examples by default  
+- Switches to other scenarios like library or online store if requested  
+- Provides code only when explicitly asked  
+- Helps with exam prep using Bloom’s Taxonomy  
+- Clean, structured, beginner-friendly code samples  
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Teaching Style
 
-## Learn More
+The chatbot focuses on:
 
-To learn more about Next.js, take a look at the following resources:
+- Scenario-driven explanations  
+- Avoiding jargon and complex syntax  
+- Responding like a friendly professor  
+- Clear, simple answers for better understanding  
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Exam Preparation
 
-## Deploy on Vercel
+Supports all levels of Bloom’s Taxonomy:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- **Understand:** Explain concepts in simple terms  
+- **Apply:** Use concepts in real scenarios  
+- **Analyze:** Compare and break down logic  
+- **Evaluate:** Justify design choices  
+- **Create:** Design small C++ programs (e.g., ATM system)  
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+
+## Built With
+
+- **Next.js ,Typescript ,Tailwind CSS**   
+
+
+
+
