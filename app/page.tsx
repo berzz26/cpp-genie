@@ -68,6 +68,21 @@ export default function CppGenieChatSplit() {
   const messagesEndRef = React.useRef<HTMLDivElement>(null);
   const textAreaRef = React.useRef<HTMLTextAreaElement>(null);
 
+  // Add utility function to detect mobile
+  const isMobile = () => {
+    if (typeof window === 'undefined') return false;
+    return window.innerWidth <= 768;
+  };
+
+  const smoothScrollToBottom = (force: boolean = false) => {
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({
+        behavior: isMobile() || force ? 'smooth' : 'auto',
+        block: 'end'
+      });
+    }
+  };
+
   const adjustTextAreaHeight = () => {
     const textarea = textAreaRef.current;
     if (textarea) {
@@ -120,27 +135,18 @@ export default function CppGenieChatSplit() {
     return () => window.removeEventListener('resize', handleResize);
   }, [sidebarOpen]);
 
-  const scrollToBottom = (behavior: 'auto' | 'smooth' = 'smooth') => {
-    if (messagesEndRef.current) {
-      const scrollContainer = messagesEndRef.current.parentElement?.parentElement;
-      if (scrollContainer) {
-        scrollContainer.scrollTo({
-          top: scrollContainer.scrollHeight,
-          behavior: behavior
-        });
-      }
-    }
-  };
-
+  // Replace existing scroll effect
   React.useEffect(() => {
-    if (isLoading) {
-      // Use 'auto' during streaming for better performance
-      scrollToBottom('auto');
-    } else {
-      // Use 'smooth' for regular messages
-      scrollToBottom('smooth');
-    }
-  }, [messages, isLoading]);
+    const scrollTimeout = setTimeout(() => {
+      if (isMobile()) {
+        smoothScrollToBottom(true);
+      } else {
+        smoothScrollToBottom();
+      }
+    }, isMobile() ? 100 : 0);
+
+    return () => clearTimeout(scrollTimeout);
+  }, [messages]);
 
   const sendMessage = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -212,8 +218,10 @@ export default function CppGenieChatSplit() {
                     : msg
                 )
               );
-              // Force scroll during streaming
-              scrollToBottom('auto');
+              // Add smooth scroll for mobile during streaming
+              if (isMobile()) {
+                setTimeout(() => smoothScrollToBottom(true), 50);
+              }
             } catch (e) {
               console.error('Error parsing chunk:', e);
             }
@@ -287,7 +295,7 @@ export default function CppGenieChatSplit() {
                 <strong>Free to Use:</strong> Unlimited access anytime, anywhere.
               </li>
               <li>
-                <strong>Why Not ChatGPT?</strong>: Focused only on C++ – No confusion/distraction from other languages or topics.
+                <strong>Why Not ChatGPT?</strong>: ChatGPT may give complex or generic answers, but Genie focuses on simple, lecture and syllabus-aligned responses tailored specifically for CEUC102 – Programming with C++.
               </li>
               <li>
                 <strong>C++ Only:</strong> Focused only on C++ – No confusion/distraction!
@@ -296,19 +304,19 @@ export default function CppGenieChatSplit() {
                 <strong>Student-Centric:</strong> Made for students, not general users.
               </li>
               <li>
-                <strong>Practice Questions:</strong> Generates problem-based questions across Bloom’s Taxonomy levels – 
+                <strong>Practice Questions:</strong> Generates problem-based questions across Bloom’s Taxonomy levels –
                 Understand, Apply, Analyze, Evaluate, and Create.
                 Great for practice, self-assessment, and concept clarity
               </li>
             </ul>
 
           </div>
-          <div className="flex justify-center w-full">
+          <div className="flex justify-left w-full">
             <Link
               href="/features"
-              className="text-blue-600 hover:underline px-4 pt-2 inline-block"
+              className="text-blue-500 hover:underline px-4 pt-2 inline-block"
             >
-              Explore more
+              <strong>Explore more about features</strong>
             </Link>
           </div>
 
@@ -326,15 +334,15 @@ export default function CppGenieChatSplit() {
         </div>
 
         {/* Footer Content - No longer fixed */}
-        <div className="flex-shrink-0 pt-6 border-t border-secondary/20">
+        <div className="flex-shrink-0  border-t border-secondary/20">
           {/* Developer Info */}
-          <div className="text-muted-foreground text-center mb-6">
+          <div className="text-muted-foreground text-left mb-2">
             <p>
               <Link
                 href="/contact"
                 className="text-blue-500 hover:underline text-base font-medium py-1 px-2 inline-block"
               >
-                Contact Us
+                <strong><i>Contact Us</i></strong>
               </Link>
             </p>
           </div>
@@ -370,9 +378,9 @@ export default function CppGenieChatSplit() {
         </div>
 
         {/* Right Chat Panel */}
-        <div className="flex-1 flex flex-col h-full min-w-0">
-          {/* Chat Header - Made sticky */}
-          <div className="sticky top-0 z-10 p-3 border-b border-secondary/20 flex items-center space-x-2 bg-secondary/10 flex-shrink-0">
+        <div className="flex-1 flex flex-col h-full min-w-0"> {/* Added min-w-0 */}
+          {/* Chat Header */}
+          <div className="p-3 border-b border-secondary/20 flex items-center space-x-2 bg-secondary/10 flex-shrink-0">
             <Button
               variant="ghost"
               size="icon"
@@ -387,11 +395,11 @@ export default function CppGenieChatSplit() {
                 <img src="C++.png" className="h-10 w-8" />
               </AvatarFallback>
             </Avatar>
-            <span className="font-semibold text-base text-primary">C++ Genie</span>
+            <span className="font-semibold text-base text-primary"><strong>C++ <i>Genie</i></strong></span>
           </div>
 
-          {/* Messages Area - Updated to account for sticky header */}
-          <div className="flex-1 overflow-hidden min-w-0 relative">
+          {/* Messages Area */}
+          <div className="flex-1 overflow-hidden min-w-0"> {/* Added min-w-0 */}
             <ScrollArea className="h-full px-4 py-2 w-full">
               <div className="space-y-4 pb-4 w-full">
                 {messages.map((message) => (
