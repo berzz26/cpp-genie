@@ -155,7 +155,7 @@ export default function CppGenieChatSplit() {
       if (!response.ok) {
         // Remove the last two messages (user message and empty assistant message)
         setMessages(messages => messages.slice(0, -2));
-        
+
         if (response.status === 429) {
           setMessages(messages => [...messages, {
             id: crypto.randomUUID(),
@@ -183,7 +183,7 @@ export default function CppGenieChatSplit() {
           if (line.startsWith('data: ')) {
             try {
               const data = JSON.parse(line.slice(6));
-              setMessages((prev) => 
+              setMessages((prev) =>
                 prev.map((msg) =>
                   msg.id === responseMessageId
                     ? { ...msg, content: msg.content + (data.chunk || '') }
@@ -267,7 +267,7 @@ export default function CppGenieChatSplit() {
                 <strong>Free to Use:</strong> Unlimited access anytime, anywhere.
               </li>
               <li>
-                <strong>Why Not ChatGPT?</strong>: ChatGPT gives general or complex code, while Genie provides simple, syllabus-based responses aligned with CEUC102 – Programming with C++.
+                <strong>Why Not ChatGPT?</strong>: Focused only on C++ – No confusion/distraction from other languages or topics.
               </li>
               <li>
                 <strong>C++ Only:</strong> Focused only on C++ – No confusion/distraction!
@@ -275,12 +275,17 @@ export default function CppGenieChatSplit() {
               <li>
                 <strong>Student-Centric:</strong> Made for students, not general users.
               </li>
+              <li>
+                <strong>Practice Questions:</strong> Generates problem-based questions across Bloom’s Taxonomy levels –
+                Understand, Apply, Analyze, Evaluate, and Create.
+                Great for practice, self-assessment, and concept clarity
+              </li>
             </ul>
-            
+
           </div>
           <div className="flex justify-center w-full">
-            <Link 
-              href="/features" 
+            <Link
+              href="/features"
               className="text-blue-600 hover:underline px-4 pt-2 inline-block"
             >
               Explore more
@@ -305,8 +310,8 @@ export default function CppGenieChatSplit() {
           {/* Developer Info */}
           <div className="text-muted-foreground text-center mb-6">
             <p>
-              <Link 
-                href="/contact" 
+              <Link
+                href="/contact"
                 className="text-blue-500 hover:underline text-base font-medium py-1 px-2 inline-block"
               >
                 Contact Us
@@ -326,6 +331,10 @@ export default function CppGenieChatSplit() {
               alt="DEPSTAR Logo"
               className="h-10 w-auto object-contain"
             />
+          </div>
+          {/* Copyright */}
+          <div className="text-center text-xs text-muted-foreground mt-4">
+            © 2025 C++ Genie, CHARUSAT. All rights reserved.
           </div>
         </div>
       </div>
@@ -439,16 +448,16 @@ export default function CppGenieChatSplit() {
                 }}
                 className="flex-1 min-h-[44px] overflow-y-auto resize-none whitespace-pre-wrap transition-height duration-100 py-2"
                 disabled={isLoading}
-                style={{ 
+                style={{
                   maxHeight: '200px',
                   height: '44px'
                 }}
               />
-              <Button 
-                type="submit" 
-                size="icon" 
+              <Button
+                type="submit"
+                size="icon"
                 className="mb-[3px]"
-                disabled={isLoading || input.trim().length === 0} 
+                disabled={isLoading || input.trim().length === 0}
                 aria-label="Send message"
               >
                 {isLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Send className="h-4 w-4" />}

@@ -77,6 +77,10 @@ export default function FeaturesPage() {
           </div>
         ))}
       </div>
+      {/* Copyright */}
+      <div className="text-center text-xs text-muted-foreground mt-8">
+            © 2025 C++ Genie, CHARUSAT. All rights reserved.
+          </div>
 
       {/* Fullscreen image overlay */}
       {activeImage && (
@@ -95,4 +99,5 @@ export default function FeaturesPage() {
       )}
     </div>
   );
+  
 }

@@ -64,7 +64,7 @@ const ContactPage = () => {
                     </div>
                     
                     {/* Footer */}
-                    <div className="text-center mt-8 text-base text-muted-foreground px-4">
+                    <div className="text-center mt-16 text-base text-muted-foreground px-4">
                         <p>Contact us or any Feedback: {" "}
                             <a 
                                 href="mailto:parthgoel.ce@charusat.ac.in"
@@ -73,6 +73,10 @@ const ContactPage = () => {
                                 parthgoel.ce@charusat.ac.in
                             </a>
                         </p>
+                    </div>
+                    {/* Copyright */}
+                    <div className="text-center text-xs text-muted-foreground mt-4">
+                        © 2025 C++ Genie, CHARUSAT. All rights reserved.
                     </div>
                 </div>
             </div>
