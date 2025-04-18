@@ -19,7 +19,7 @@ const features = [
   {
     title: 'Why Not ChatGPT?',
     description: 'ChatGPT gives general or complex code, while Genie provides simple, syllabus-based responses aligned with CEUC102 – Programming with C++',
-    image: '/images/Diff.png',
+    image: '/images/gptvsgenie.jpg',
   },
   {
     title: 'C++ Only',
