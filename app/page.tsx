@@ -9,6 +9,8 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Textarea } from "@/components/ui/textarea";
 import Link from 'next/link';
+import 'katex/dist/katex.min.css';
+import katex from 'katex';
 
 interface Message {
   id: string;
@@ -52,6 +54,14 @@ const markdownStyles = `
   .markdown-body li { margin-bottom: 4px; }
   .markdown-body p { margin-bottom: 8px; }
   .markdown-body img { max-width: 100%; height: auto; }
+  .katex-display {
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 5px 0;
+  }
+  .katex {
+    font-size: 1.1em;
+  }
 `;
 
 export default function CppGenieChatSplit() {
@@ -244,8 +254,32 @@ export default function CppGenieChatSplit() {
   };
 
   const formatCodeBlocks = (content: string) => {
+    // Process LaTeX expressions first
+    content = content.replace(/\\\((.*?)\\\)/g, (match, latex) => {
+      try {
+        return katex.renderToString(latex, { throwOnError: false });
+      } catch (e) {
+        console.error('KaTeX error:', e);
+        return match;
+      }
+    });
+    
+    content = content.replace(/\\\[(.*?)\\\]/g, (match, latex) => {
+      try {
+        return katex.renderToString(latex, { 
+          displayMode: true,
+          throwOnError: false
+        });
+      } catch (e) {
+        console.error('KaTeX error:', e);
+        return match;
+      }
+    });
+
     const formattedContent = content.replace(/```(\w+)?\n([\s\S]*?)```/g, (match, language, code) => {
-      return `<pre><code class="language-${language || 'text'}">${code.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</code></pre>`;
+      // Replace multiplication operators with HTML entities in code blocks
+      const processedCode = code.replace(/\*/g, '&ast;');
+      return `<pre><code class="language-${language || 'text'}">${processedCode.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</code></pre>`;
     });
 
     return formattedContent
@@ -336,7 +370,7 @@ export default function CppGenieChatSplit() {
         {/* Footer Content - No longer fixed */}
         <div className="flex-shrink-0  border-t border-secondary/20">
           {/* Developer Info */}
-          <div className="text-muted-foreground text-left mb-2">
+          {/* <div className="text-muted-foreground text-left mb-2">
             <p>
               <Link
                 href="/contact"
@@ -345,7 +379,7 @@ export default function CppGenieChatSplit() {
                 <strong><i>Contact Us</i></strong>
               </Link>
             </p>
-          </div>
+          </div> */}
 
           {/* Bottom Logos */}
           <div className="flex justify-center items-center gap-2 w-full">
@@ -380,22 +414,32 @@ export default function CppGenieChatSplit() {
         {/* Right Chat Panel */}
         <div className="flex-1 flex flex-col h-full min-w-0"> {/* Added min-w-0 */}
           {/* Chat Header */}
-          <div className="p-3 border-b border-secondary/20 flex items-center space-x-2 bg-secondary/10 flex-shrink-0">
-            <Button
-              variant="ghost"
-              size="icon"
-              className="lg:hidden"
-              onClick={() => setSidebarOpen(true)}
-              aria-label="Open menu"
-            >
-              <Menu className="h-5 w-5" />
-            </Button>
-            <Avatar className="h-7 w-7">
-              <AvatarFallback className="bg-primary text-primary-foreground">
-                <img src="C++.png" className="h-10 w-8" />
-              </AvatarFallback>
-            </Avatar>
-            <span className="font-semibold text-base text-primary"><strong>C++ <i>Genie</i></strong></span>
+          <div className="p-3 border-b border-secondary/20 flex items-center justify-between bg-secondary/10 flex-shrink-0">
+            <div className="flex items-center space-x-2">
+              <Button
+                variant="ghost"
+                size="icon"
+                className="lg:hidden"
+                onClick={() => setSidebarOpen(true)}
+                aria-label="Open menu"
+              >
+                <Menu className="h-5 w-5" />
+              </Button>
+              <Avatar className="h-7 w-7">
+                <AvatarFallback className="bg-primary text-primary-foreground">
+                  <img src="C++.png" className="h-10 w-8" />
+                </AvatarFallback>
+              </Avatar>
+              <span className="font-semibold text-base text-primary"><strong>C++ <i>Genie</i></strong></span>
+            </div>
+            <div className="flex items-center">
+              <Link
+                href="/contact"
+                className="text-blue-500 hover:underline text-sm mr-4"
+              >
+                <strong><i>Contact Us</i></strong>
+              </Link>
+            </div>
           </div>
 
           {/* Messages Area */}
