@@ -120,6 +120,28 @@ export default function CppGenieChatSplit() {
     return () => window.removeEventListener('resize', handleResize);
   }, [sidebarOpen]);
 
+  const scrollToBottom = (behavior: 'auto' | 'smooth' = 'smooth') => {
+    if (messagesEndRef.current) {
+      const scrollContainer = messagesEndRef.current.parentElement?.parentElement;
+      if (scrollContainer) {
+        scrollContainer.scrollTo({
+          top: scrollContainer.scrollHeight,
+          behavior: behavior
+        });
+      }
+    }
+  };
+
+  React.useEffect(() => {
+    if (isLoading) {
+      // Use 'auto' during streaming for better performance
+      scrollToBottom('auto');
+    } else {
+      // Use 'smooth' for regular messages
+      scrollToBottom('smooth');
+    }
+  }, [messages, isLoading]);
+
   const sendMessage = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!input.trim() || isLoading) return;
@@ -190,6 +212,8 @@ export default function CppGenieChatSplit() {
                     : msg
                 )
               );
+              // Force scroll during streaming
+              scrollToBottom('auto');
             } catch (e) {
               console.error('Error parsing chunk:', e);
             }
@@ -210,10 +234,6 @@ export default function CppGenieChatSplit() {
       setIsLoading(false);
     }
   };
-
-  React.useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages]);
 
   const formatCodeBlocks = (content: string) => {
     const formattedContent = content.replace(/```(\w+)?\n([\s\S]*?)```/g, (match, language, code) => {
@@ -276,7 +296,7 @@ export default function CppGenieChatSplit() {
                 <strong>Student-Centric:</strong> Made for students, not general users.
               </li>
               <li>
-                <strong>Practice Questions:</strong> Generates problem-based questions across Bloom’s Taxonomy levels –
+                <strong>Practice Questions:</strong> Generates problem-based questions across Bloom’s Taxonomy levels – 
                 Understand, Apply, Analyze, Evaluate, and Create.
                 Great for practice, self-assessment, and concept clarity
               </li>
@@ -350,9 +370,9 @@ export default function CppGenieChatSplit() {
         </div>
 
         {/* Right Chat Panel */}
-        <div className="flex-1 flex flex-col h-full min-w-0"> {/* Added min-w-0 */}
-          {/* Chat Header */}
-          <div className="p-3 border-b border-secondary/20 flex items-center space-x-2 bg-secondary/10 flex-shrink-0">
+        <div className="flex-1 flex flex-col h-full min-w-0">
+          {/* Chat Header - Made sticky */}
+          <div className="sticky top-0 z-10 p-3 border-b border-secondary/20 flex items-center space-x-2 bg-secondary/10 flex-shrink-0">
             <Button
               variant="ghost"
               size="icon"
@@ -370,8 +390,8 @@ export default function CppGenieChatSplit() {
             <span className="font-semibold text-base text-primary">C++ Genie</span>
           </div>
 
-          {/* Messages Area */}
-          <div className="flex-1 overflow-hidden min-w-0"> {/* Added min-w-0 */}
+          {/* Messages Area - Updated to account for sticky header */}
+          <div className="flex-1 overflow-hidden min-w-0 relative">
             <ScrollArea className="h-full px-4 py-2 w-full">
               <div className="space-y-4 pb-4 w-full">
                 {messages.map((message) => (
