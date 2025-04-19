@@ -21,26 +21,6 @@ const ContactPage = () => {
                     <h1 className="text-3xl font-bold mb-6 text-primary text-center">Our Team</h1>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-4xl mx-auto">
-                        {/* Mentor Card */}
-                        <div className="bg-secondary/5 rounded-lg p-6 md:p-8 border border-secondary/20 w-full">
-                            <div className="flex flex-col items-center">
-                                <div className="w-40 h-40 rounded-full bg-secondary mb-6 overflow-hidden flex items-center justify-center">
-                                    <img
-                                        src="/PG_JPG.png"
-                                        alt="Mentor"
-                                        className="w-full h-full object-cover object-center"
-                                        style={{ objectPosition: 'center 20%' }}
-                                    />
-                                </div>
-                                <h2 className="text-2xl font-semibold text-primary">Dr. Parth Goel</h2>
-                                <p className="text-center text-muted-foreground mt-2">Mentor | Concept Designer | LLM Engineer</p>
-                                <p className="text-lg text-muted-foreground mt-1">DEPSTAR-CSE</p>
-                                <div className="mt-4 text-center">
-                                    
-                                </div>
-                            </div>
-                        </div>
-
                         {/* Lead Developer Card */}
                         <div className="bg-secondary/5 rounded-lg p-6 md:p-8 border border-secondary/20 w-full">
                             <div className="flex flex-col items-center">
@@ -57,7 +37,25 @@ const ContactPage = () => {
                                 <p className="text-lg text-muted-foreground mt-1">DEPSTAR-CSE</p>
                                 <div className=" text-center">
                                     <p className="text-base text-muted-foreground">ID: 24DCS133</p>
-                                   
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Mentor Card */}
+                        <div className="bg-secondary/5 rounded-lg p-6 md:p-8 border border-secondary/20 w-full">
+                            <div className="flex flex-col items-center">
+                                <div className="w-40 h-40 rounded-full bg-secondary mb-6 overflow-hidden flex items-center justify-center">
+                                    <img
+                                        src="/PG_JPG.png"
+                                        alt="Mentor"
+                                        className="w-full h-full object-cover object-center"
+                                        style={{ objectPosition: 'center 20%' }}
+                                    />
+                                </div>
+                                <h2 className="text-2xl font-semibold text-primary">Dr. Parth Goel</h2>
+                                <p className="text-center text-muted-foreground mt-2">Mentor | Concept Designer | LLM Engineer</p>
+                                <p className="text-lg text-muted-foreground mt-1">DEPSTAR-CSE</p>
+                                <div className="mt-4 text-center">
                                 </div>
                             </div>
                         </div>
