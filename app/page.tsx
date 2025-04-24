@@ -436,12 +436,16 @@ export default function CppGenieChatSplit() {
               <span className="font-semibold text-base text-primary"><strong>C++ <i>Genie</i></strong></span>
             </div>
             <div className="flex items-center">
-              <Link
-                href="/contact"
-                className="text-blue-500 hover:underline text-sm mr-4"
-              >
-                <strong><i>Contact Us</i></strong>
+            <Button
+              asChild
+              className="bg-blue-500 hover:bg-blue-700 text-white text-sm rounded-full px-3 py-2"
+            >
+              <Link href="/contact">
+                <strong>
+                  <i>Contact Us</i>
+                </strong>
               </Link>
+            </Button>
             </div>
           </div>
 

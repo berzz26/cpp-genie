@@ -14,7 +14,7 @@ const features = [
   {
     title: 'Free to Use',
     description: 'Unlimited access anytime, anywhere.',
-    image: '/images/desktop.png', 
+    image: '/images/desktop.png',
   },
   {
     title: 'Why Not ChatGPT?',
@@ -32,6 +32,11 @@ const features = [
     video: '/video/student.mp4',
     type: 'video',
     thumbnail: '/images/thumbnail1.png' // Add thumbnail path
+  },
+  {
+    title: 'Practice Questions',
+    description: 'Generates problem-based questions across Bloom’s Taxonomy levels –Understand, Apply, Analyze, Evaluate, and Create.Great for practice, self- assessment, and concept clarity',
+    image: '/images/questions.png',
   },
 ];
 
@@ -58,8 +63,8 @@ export default function FeaturesPage() {
             <h2 className="text-xl font-semibold mb-2">{feature.title}</h2>
             <p className="mb-4">{feature.description}</p>
             {feature.type === 'video' ? (
-              <video 
-                controls 
+              <video
+                controls
                 className="w-full rounded-lg"
                 poster={feature.thumbnail}
               >
@@ -79,8 +84,8 @@ export default function FeaturesPage() {
       </div>
       {/* Copyright */}
       <div className="text-center text-xs text-muted-foreground mt-8">
-            © 2025 C++ Genie, CHARUSAT. All rights reserved.
-          </div>
+        © 2025 C++ Genie, CHARUSAT. All rights reserved.
+      </div>
 
       {/* Fullscreen image overlay */}
       {activeImage && (
@@ -100,5 +105,5 @@ export default function FeaturesPage() {
       )}
     </div>
   );
-  
+
 }
