@@ -36,7 +36,9 @@ const features = [
   {
     title: 'Practice Questions',
     description: 'Generates problem-based questions across Bloom’s Taxonomy levels –Understand, Apply, Analyze, Evaluate, and Create.Great for practice, self- assessment, and concept clarity',
-    image: '/images/questions.png',
+    video: '/video/questions.mp4',
+    type: 'video',
+    thumbnail: '/images/questions.png' // Add thumbnail path
   },
 ];
 
