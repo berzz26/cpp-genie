@@ -342,6 +342,9 @@ export default function CppGenieChatSplit() {
                 Understand, Apply, Analyze, Evaluate, and Create.
                 Great for practice, self-assessment, and concept clarity
               </li>
+              <li>
+                <strong>Context driven and memory enabled:</strong>   Genie can remember what you asked, ensuring a seamless and personalized experience.
+              </li>
             </ul>
 
           </div>

@@ -85,14 +85,15 @@ export default function FeaturesPage() {
       {/* Fullscreen image overlay */}
       {activeImage && (
         <div
-          className="fixed inset-0 bg-black bg-opacity-70 flex justify-center items-center z-50"
+          className="fixed inset-0 bg-black bg-opacity-70 flex justify-center items-center z-50 p-4"
           onClick={() => setActiveImage(null)}
         >
-          <div className="max-w-[80%] max-h-[80vh] p-4">
+          <div className="relative w-full h-full flex justify-center items-center">
             <img
               src={activeImage}
-              className="w-full h-full object-contain rounded-lg transition-transform scale-100 hover:scale-105"
+              className="max-w-full max-h-[90vh] object-contain rounded-lg"
               alt="Zoomed feature"
+              onClick={(e) => e.stopPropagation()}
             />
           </div>
         </div>
