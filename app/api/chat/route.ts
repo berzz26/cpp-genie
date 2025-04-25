@@ -80,6 +80,8 @@ export async function POST(req: Request) {
       if (insertError) {
         console.error("Supabase insert error:", insertError);
       }
+      console.log("prompt:", lastMessage.content);
+      console.log("Data:", fullResponse);
     });
 
     // Set sessionId cookie in Edge-compatible way
