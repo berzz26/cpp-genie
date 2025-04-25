@@ -18,7 +18,7 @@ const features = [
   },
   {
     title: 'Why Genie',
-    description: 'Genie focuses on simple, lecture and syllabus-aligned responses tailored specifically for CEUC102 – Programming with C++ and teaching style',
+    description: 'Genie focuses on simple, lecture and syllabus-aligned responses tailored specifically for CEUC102 – Programming with C++ and classroom learning experience.',
     image: '/images/gptvsgenie.jpg',
   },
   {
@@ -35,7 +35,7 @@ const features = [
   },
   {
     title: 'Practice Questions',
-    description: 'Generates problem-based questions across Bloom’s Taxonomy levels –Understand, Apply, Analyze, Evaluate, and Create.Great for practice, self- assessment, and concept clarity',
+    description: 'Helps practicing problem-based questions across Bloom’s Taxonomy levels – Understand, Apply, Analyze, Evaluate, and Create. Great for practice, self-assessment, and concept clarity.',
     video: '/video/questions.mp4',
     type: 'video',
     thumbnail: '/images/questions.png' // Add thumbnail path

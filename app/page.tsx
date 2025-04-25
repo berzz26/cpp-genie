@@ -323,15 +323,15 @@ export default function CppGenieChatSplit() {
             <p className="text-base lg:text-base font-semibold mb-2">Features:</p>
             <ul className="list-disc text-sm lg:text-sm text-muted-foreground space-y-2 pl-5">
               <li>
-                <strong>Lecture & syllabus Aligned: </strong> Genie focuses on simple, lecture and syllabus-aligned responses tailored specifically for CEUC102 – Programming with C++ and teaching style.
+                <strong>Lecture & syllabus Aligned: </strong> Genie focuses on simple, lecture and syllabus-aligned responses tailored specifically for CEUC102 – Programming with C++ and classroom learning experience.
 
               </li>
               <li>
-                <strong>Practice Questions:</strong>  Generates problem-based questions across Bloom’s Taxonomy levels – Understand, Apply, Analyze, Evaluate, and Create. Great for practice, self-assessment, and concept clarity.
+                <strong>Practice Questions:</strong> Helps practicing problem-based questions across Bloom’s Taxonomy levels – Understand, Apply, Analyze, Evaluate, and Create. Great for practice, self-assessment, and concept clarity.
 
               </li>
               <li>
-                <strong>Why Genie?</strong>: Genie focuses on simple, lecture and syllabus-aligned responses tailored specifically for CEUC102 – Programming with C++ and teaching style.
+                <strong>Why Genie?</strong>: Genie focuses on simple, lecture and syllabus-aligned responses tailored specifically for CEUC102 – Programming with C++ and classroom learning experience.
               </li>
               <li>
                 <strong>Student-Centric:</strong> Made for students, not general users.
