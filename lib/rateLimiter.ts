@@ -1,6 +1,6 @@
 const rateLimit = new Map<string, { count: number; resetTime: number }>();
 
-const LIMIT = 5;  // 5 requests
+const LIMIT = 15;  // 5 requests
 const WINDOW = 60 * 1000;  // 1 minute in milliseconds
 
 export function checkRateLimit(sessionId: string): boolean {

@@ -198,7 +198,7 @@ export default function CppGenieChatSplit() {
           setMessages(messages => [...messages, {
             id: crypto.randomUUID(),
             role: "assistant",
-            content: "Rate limit exceeded. Please try again after a minute.",
+            content: "Rate limit exceeded (15 questions/minute). Please try again after a minute.",
           }]);
         } else {
           const error = await response.json();
