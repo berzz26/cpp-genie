@@ -263,10 +263,10 @@ export default function CppGenieChatSplit() {
         return match;
       }
     });
-    
+
     content = content.replace(/\\\[(.*?)\\\]/g, (match, latex) => {
       try {
-        return katex.renderToString(latex, { 
+        return katex.renderToString(latex, {
           displayMode: true,
           throwOnError: false
         });
@@ -323,27 +323,33 @@ export default function CppGenieChatSplit() {
             <p className="text-base lg:text-base font-semibold mb-2">Features:</p>
             <ul className="list-disc text-sm lg:text-sm text-muted-foreground space-y-2 pl-5">
               <li>
-                <strong>Guardrails:</strong> Safe, Unbiased, prevent misleading or harmful content.
+                <strong>Lecture & syllabus Aligned: </strong> Genie focuses on simple, lecture and syllabus-aligned responses tailored specifically for CEUC102 – Programming with C++ and teaching style.
+
               </li>
               <li>
-                <strong>Free to Use:</strong> Unlimited access anytime, anywhere.
+                <strong>Practice Questions:</strong>  Generates problem-based questions across Bloom’s Taxonomy levels – Understand, Apply, Analyze, Evaluate, and Create. Great for practice, self-assessment, and concept clarity.
+
               </li>
               <li>
-                <strong>Why Not ChatGPT?</strong>: ChatGPT may give complex or generic answers, but Genie focuses on simple, lecture and syllabus-aligned responses tailored specifically for CEUC102 – Programming with C++.
-              </li>
-              <li>
-                <strong>C++ Only:</strong> Focused only on C++ – No confusion/distraction!
+                <strong>Why Genie?</strong>: Genie focuses on simple, lecture and syllabus-aligned responses tailored specifically for CEUC102 – Programming with C++ and teaching style.
               </li>
               <li>
                 <strong>Student-Centric:</strong> Made for students, not general users.
               </li>
               <li>
-                <strong>Practice Questions:</strong> Generates problem-based questions across Bloom’s Taxonomy levels –
-                Understand, Apply, Analyze, Evaluate, and Create.
-                Great for practice, self-assessment, and concept clarity
+                <strong>C++ Only:</strong> Focused only on C++ – No confusion/distraction!
               </li>
               <li>
-                <strong>Context driven and memory enabled:</strong>   Genie can remember what you asked, ensuring a seamless and personalized experience.
+                <strong>Context driven and memory enabled:</strong>Genie can remember what you asked, ensuring a seamless and personalized experience.
+
+              </li>
+              <li>
+                <strong>Guardrails:</strong>  Safe, Unbiased, prevent misleading or harmful content.
+
+              </li>
+              <li>
+                <strong>Free to use</strong>  Unlimited access anytime, anywhere.
+
               </li>
             </ul>
 
@@ -436,16 +442,16 @@ export default function CppGenieChatSplit() {
               <span className="font-semibold text-base text-primary"><strong>C++ <i>Genie</i></strong></span>
             </div>
             <div className="flex items-center">
-            <Button
-              asChild
-              className="bg-blue-500 hover:bg-blue-700 text-white text-sm rounded-full px-3 py-2"
-            >
-              <Link href="/contact">
-                <strong>
-                  <i>Contact Us</i>
-                </strong>
-              </Link>
-            </Button>
+              <Button
+                asChild
+                className="bg-blue-500 hover:bg-blue-700 text-white text-sm rounded-full px-3 py-2"
+              >
+                <Link href="/contact">
+                  <strong>
+                    <i>Contact Us</i>
+                  </strong>
+                </Link>
+              </Button>
             </div>
           </div>
 
