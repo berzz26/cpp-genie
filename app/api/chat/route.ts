@@ -12,20 +12,10 @@ export async function POST(req: Request) {
   const writer = stream.writable.getWriter();
 
   try {
-    // Origin check
-    const origin = req.headers.get("origin");
+    const origin = req.headers.get('origin');
     if (!isValidOrigin(origin)) {
       return NextResponse.json(
         { error: "Forbidden: Invalid origin" },
-        { status: 403 }
-      );
-    }
-
-    // API Key check
-    const apiKey = req.headers.get("x-api-key");
-    if (apiKey !== process.env.CHAT_API_SECRET) {
-      return NextResponse.json(
-        { error: "Forbidden: Invalid API key" },
         { status: 403 }
       );
     }
@@ -43,12 +33,14 @@ export async function POST(req: Request) {
       .find((c) => c.trim().startsWith("sessionId="));
     let sessionId = sessionCookie?.split("=")[1];
 
+    // Generate session ID if not found
     if (!sessionId) {
       const array = new Uint8Array(16);
       crypto.getRandomValues(array);
       sessionId = Array.from(array, (b) => b.toString(16).padStart(2, "0")).join("");
     }
 
+    // Check rate limit
     if (!checkRateLimit(sessionId)) {
       return NextResponse.json(
         { error: "Rate limit exceeded. Please try again later." },
@@ -88,11 +80,11 @@ export async function POST(req: Request) {
       if (insertError) {
         console.error("Supabase insert error:", insertError);
       }
-
       console.log("prompt:", lastMessage.content);
       console.log("Data:", fullResponse);
     });
 
+    // Set sessionId cookie in Edge-compatible way
     const response = new NextResponse(stream.readable, {
       headers: {
         "Content-Type": "text/event-stream",
