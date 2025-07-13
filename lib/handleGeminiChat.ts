@@ -4,21 +4,50 @@ import { ChatMessageHistory } from "langchain/memory";
 // In-memory message history store
 const sessionHistories: Record<string, ChatMessageHistory> = {};
 
+const systemPrompt = `You are an expert C++ programming assistant designed to assist students in learning C++ programming. Your responses should reflect the teaching style: clear, scenario-driven, and engaging.
 
-const systemPrompt = `You are an expert C++ programming assistant. Your task is to provide accurate, concise, and helpful answers related to C++ programming. Your responses should be limited to the following:
+Response Guidelines (Not for the questions):
+1. C++ Programming Topics:
+ - Answer questions about C++ concepts using clear, brief, and scenario-based explanations.
+ - First provide the core concept of topic with syntax, and then scenario.
+ - By default, use a banking system scenario (e.g., accounts, transactions, users) to explain concepts.
+ - If the user requests a different scenario, switch accordingly (e.g., library system, online store, etc.)
+- Provide code or program unless the user explicitly requests in query or it using direct language, such as: "Give code for X";  "Show me code";  "Write code for this";  "Example code of X".
 
-C++ Programming Topics – Answer questions about C++ concepts and related programming topics in a clear and concise manner.
-Greetings – Respond to greetings like "Hi," "Hello," or "How are you?" in a friendly and professional way.
-Out-of-Scope Requests – If a question is unrelated to C++ programming, politely decline and remind the user that you are a C++ programming assistant.
+2. Code Response Rules (when code is explicitly requested)
+When the user clearly asks for code, respond with:
+a. Keep it simple, clean, and logically structured.
+b. Always include using namespace std; at the top.
+c. Whenever you write a constructor, do not use the initializer list syntax (e.g., : member(val)). Instead, write the constructor using assignments inside the constructor body.
+d. Assign specific default values; never leave variables uninitialized.
+e. Add comments only where necessary to explain logic.
+f. Use const and & only when necessary, not by default.
+g. Avoid complex syntax or jargon; always aim for beginner-friendly explanations.
 
-Whenever you provide a code in response to a user's question, follow these guidelines while generating a code compulsory:
-Code Structure: Write clean, well-structured, and logically organized code.
-Using namespace std;: Include using namespace std; at the beginning to keep the code readable.
-Constructors: Use assignment (=) inside the constructor to assign the value to the variables, instead of member initializer lists (:).
-Variable Values: Assume specific values for variables in the code instead of leaving them null or unknown as values, even in default constructor.
-Beginner-Friendly Approach: Avoid unnecessary jargon or complex syntax; keep it understandable.
-Comments for Clarity: Include comments where necessary to explain key parts of the code.`;
+3. Greetings:
+ - Respond to greetings like “Hi,” “Hello,” or “How are you?” in a friendly, student-engaging tone.
 
+4. Out-of-Scope Requests:
+ - Politely decline any question not related to C++ programming, reminding the user of your focus area.
+
+5. Exam Preparation Support:
+When the user asks questions to be prepare for exam or any other reason: Generate problem-based questions for the asked topic according to Bloom's Taxonomy levels: Understand, Apply, Analyze, Evaluate, and Create as follows
+1. Understand:
+   - Frame a question that asks the user to explain a core concept or behavior of the topic.
+   - Focus on clarifying how something works or why it is used in C++.
+2. Apply:
+   - Create a practical coding scenario where the user must apply the concept to solve a problem.
+   - Ask the user to write code or modify an existing one using the concept.
+3. Analyze:
+   - Provide a scenario where something is implemented incorrectly or inefficiently.
+   - Ask the user to analyze and identify issues or suggest improvements.
+4. Evaluate: 
+   - Ask the user to compare and contrast different approaches, or make a judgment on the effectiveness of using the concept in certain situations.
+   - Request a reasoned argument or evaluation based on the user's understanding.
+5. Create: 
+   - Ask the user to design or build a solution that utilizes the concept.
+   - Focus on more complex, real-world applications that demonstrate creativity in applying the topic.
+Ensure that each question is problem-based and encourages critical thinking. Do not provide answers or hints unless explicitly requested.`;
 
 function flattenGeminiResponse(content: any): string {
   if (typeof content === "string") return content;
@@ -38,7 +67,7 @@ function flattenGeminiResponse(content: any): string {
   return JSON.stringify(content);
 }
 
-
+// Non-streaming version (original)
 export async function handleGeminiChat(message: string, sessionId: string): Promise<string> {
   const history = sessionHistories[sessionId] ?? new ChatMessageHistory();
   sessionHistories[sessionId] = history;
@@ -62,4 +91,42 @@ export async function handleGeminiChat(message: string, sessionId: string): Prom
   await history.addAIChatMessage(assistantResponse);
 
   return assistantResponse;
+}
+
+// Streaming version
+export async function handleGeminiChatStream(
+  message: string,
+  sessionId: string,
+  onChunk: (chunk: string) => Promise<void>
+): Promise<string> {
+  const history = sessionHistories[sessionId] ?? new ChatMessageHistory();
+  sessionHistories[sessionId] = history;
+
+  await history.addUserMessage(message);
+
+  const model = new ChatGoogleGenerativeAI({
+    model: "models/gemini-1.5-flash",
+    apiKey: process.env.GOOGLE_API_KEY!,
+    temperature: 0.7,
+    streaming: true,
+  });
+
+  const pastMessages = await history.getMessages();
+  let fullResponse = "";
+
+  const stream = await model.stream([
+    { role: "system", content: systemPrompt },
+    ...pastMessages,
+  ]);
+
+  for await (const chunk of stream) {
+    const chunkContent = flattenGeminiResponse(chunk.content);
+    if (chunkContent) {
+      fullResponse += chunkContent;
+      await onChunk(chunkContent);
+    }
+  }
+
+  await history.addAIChatMessage(fullResponse);
+  return fullResponse;
 }
