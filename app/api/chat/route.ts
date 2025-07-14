@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
 import { supabase } from "@/lib/supabaseClient";
+import { handleOpenAIChat } from "@/lib/handleOpenAIChat";
 import { checkRateLimit } from "@/lib/rateLimiter";
 import { isValidOrigin } from "@/lib/security";
-import { handleGeminiChatStream } from "@/lib/handleGeminiChat";
 
 export const runtime = "edge";
 
@@ -50,8 +50,7 @@ export async function POST(req: Request) {
 
     let fullResponse = "";
 
-    // Use the streaming version
-    const streamResponse = handleGeminiChatStream(
+    const streamResponse = handleOpenAIChat(
       lastMessage.content,
       sessionId,
       async (chunk) => {
@@ -61,8 +60,7 @@ export async function POST(req: Request) {
     );
 
     streamResponse.finally(async () => {
-      await writer.write(encoder.encode(`data: [DONE]\n\n`));
-      await writer.close();
+      writer.close();
 
       const ip =
         req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ??
